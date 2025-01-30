@@ -8,6 +8,7 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KandidatController;
 use App\Http\Controllers\PemilihController;
+use App\Http\Controllers\UserController;
 
 // Route untuk pemilih yang belum login
 Route::middleware(['guest:pemilih'])->group(function () {
@@ -38,6 +39,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::resource('kelas', KelasController::class);
     Route::resource('kandidat', KandidatController::class);
     Route::resource('pemilih', PemilihController::class);
+    Route::resource('user', UserController::class);
 
     // Route Import
     Route::post('/import', [PemilihController::class, 'import'])->name('pemilih.import');
