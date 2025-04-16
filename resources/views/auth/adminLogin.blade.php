@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Admin</title>
 
-    <link rel="shortcut icon" href="{{ asset('assets/img/icon.png') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ asset('assets/static/images/logo/OVO.svg') }}" type="image/x-icon" />
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/auth.css') }}" />
     {{-- FontAwesome --}}
@@ -20,7 +20,7 @@
         <div class="col-lg-4 col-12 mt-5">
           <div id="auth-center">
             <div class="text-center mb-5">
-              <a href="index.html"><img src="{{ asset('assets/static/images/logo/icon2.svg') }}" alt="Logo" width="200"></a>
+              <a href="/"><img src="{{ asset('assets/static/images/logo/icon2.svg') }}" alt="Logo" width="200"></a>
             </div>
             <h1 class="text-center">Login Admin.</h1>
             @if (Session::get('error'))

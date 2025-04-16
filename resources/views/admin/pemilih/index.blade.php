@@ -115,6 +115,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn icon icon-left btn-success" onclick="downloadTemplate()"> <i class="fas fa-file-download"></i> Unduh Template</button>
             <button type="submit" class="btn btn-primary">Import</button>
           </div>
         </form>
@@ -133,6 +134,10 @@
       printWindow.onload = function() {
         printWindow.print();
       };
+    }
+
+    function downloadTemplate() {
+      window.location.href = "/download-template";
     }
   </script>
 @endsection

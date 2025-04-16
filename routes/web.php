@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DownloadTemplateController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\JurusanController;
@@ -54,4 +55,7 @@ Route::middleware(['auth:admin'])->group(function () {
     // Route Sub Dashboard
     Route::get('/dashboard/sudah-memilih', [DashboardController::class, 'sudahMemilih'])->name('sudah');
     Route::get('/dashboard/belum-memilih', [DashboardController::class, 'belumMemilih'])->name('belum');
+
+    // Route Download Template
+    Route::get('/download-template', [DownloadTemplateController::class, 'template'])->name('download.template');
 });

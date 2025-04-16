@@ -63,8 +63,8 @@
                       @endphp
                       <input type="file" name="{{ $data->name }}" class="form-control @error($data->name) is-invalid @enderror">
                       @if ($data->value)
-                        <div class="avatar avatar-lg mt-2">
-                          <img src="{{ url($path) }}" alt="avatar">
+                        <div class="my-2">
+                          <img src="{{ url($path) }}" class="img-thumbnail border rounded" height="100" width="100" alt="avatar">
                         </div>
                       @endif
                       @error($data->name)

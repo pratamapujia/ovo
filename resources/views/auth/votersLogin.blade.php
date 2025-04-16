@@ -19,7 +19,7 @@
   <body>
     <div id="app">
       <div id="main" class="layout-horizontal">
-        <header class="mb-5">
+        <nav>
           <div class="header-top">
             <div class="container">
               <div class="logo">
@@ -36,9 +36,9 @@
               </div>
             </div>
           </div>
-        </header>
+        </nav>
 
-        <div class="content-wrapper container">
+        <div class="content-wrapper container m-auto">
           <div class="page-content">
             <div class="container">
               <div class="row mb-5">
@@ -51,16 +51,6 @@
                       @endif
                     @endif
                   @endforeach
-                  {{-- @php
-                    $alert = Session::get('error');
-                  @endphp
-                  <div class="flash-data" data-berhasil="{{ Session::get('pesan') }}"></div>
-                  @if (Session::get('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                      <strong>{{ $alert }}</strong>
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                  @endif --}}
                   <div class="flash-data" data-gagal="{{ Session::get('error') }}"></div>
                   <form method="POST" action="{{ route('login.voters') }}" class="mt-3">
                     @csrf
