@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voting Page</title>
 
-    <link rel="shortcut icon" href="{{ asset('assets') }}/static/images/logo/OVO.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/static/images/logo/OVO.svg') }}" type="image/x-icon">
 
-    <link rel="stylesheet" href="{{ asset('assets') }}/compiled/css/app.css">
-    <link rel="stylesheet" crossorigin href="{{ asset('assets') }}/compiled/css/iconly.css">
+    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}">
+    <link rel="stylesheet" crossorigin href="{{ asset('assets/compiled/css/iconly.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}" />
 
     <style>
@@ -22,10 +22,10 @@
   </head>
 
   <body>
-    <script src="{{ asset('assets') }}/static/js/initTheme.js"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
       <div id="main" class="layout-horizontal">
-        <header class="mb-5">
+        <header class="mb-1 sticky-top">
           <div class="header-top">
             <div class="container">
               <div class="logo">
@@ -84,31 +84,61 @@
                   <div class="col">
                     <div class="card">
                       <div class="card-content">
-                        <div class="card-header">
-                          <h4 class="card-title">{{ $data->nama_kandidat }}</h4>
+                        <div class="ratio ratio-1x1">
+                          <img src="{{ $path }}" class="card-img-top img-fluid" alt="Foto Kandidat">
                         </div>
-                        <div class="d-flex">
-                          <img src="{{ $path }}" alt="Foto Paslon" class="img-fluid mx-auto rounded" style="height: 120px">
-                        </div>
-                        <div class="card-body pt-4">
-                          <div class="row">
+                        <div class="card-body p-2">
+                          <h5 class="card-title text-center">Paslon {{ $loop->iteration }}</h5>
+                          <div class="row p-2">
                             <div class="col-6">
-                              <h5 class="card-title">Visi</h5>
-                              <p class="p-scroll">{{ $data->visi }}</p>
+                              <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#detail{{ $data->id }}">Detail</button>
                             </div>
                             <div class="col-6">
-                              <h5 class="card-title">Misi</h5>
-                              <p class="p-scroll">{{ $data->misi }}</p>
+                              <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
+                                @csrf
+                                <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
+                                <button type="button" class="btn btn-primary w-100 btn-vote">Pilih</button>
+                              </form>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="card-footer">
-                        <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
-                          @csrf
-                          <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
-                          <button type="button" class="btn btn-primary w-100 btn-vote">{{ $data->nama_kandidat }}</button>
-                        </form>
+                    </div>
+                  </div>
+
+                  {{-- Modal Detail --}}
+                  <div class="modal modal-borderless fade" id="detail{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="detail{{ $data->id }}Title" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                      <div class="modal-content">
+                        {{-- <div class="modal-header">
+                          <h5 class="modal-title" id="detail{{ $data->id }}Title">{{ $data->nama_kandidat }}</h5>
+                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                          </button>
+                        </div> --}}
+                        <div class="modal-body">
+                          <img src="{{ $path }}" class="d-flex img-fluid mx-auto rounded" alt="Foto Paslon" style="height: 200px">
+                          <h4 class="modal-title my-2 text-center">{{ $data->nama_kandidat }}</h4>
+                          <div class="my-2">
+                            <h5 class="modal-title">Visi</h5>
+                            <p>{{ $data->visi }}</p>
+                          </div>
+                          <div class="my-2">
+                            <h5 class="modal-title">Misi</h5>
+                            <p>{{ $data->misi }}</p>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                          </button>
+                          <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
+                            @csrf
+                            <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
+                            <button type="button" class="btn btn-primary btn-vote">Pilih</button>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -134,12 +164,12 @@
         </footer>
       </div>
     </div>
-    <script src="{{ asset('assets') }}/static/js/pages/horizontal-layout.js"></script>
-    <script src="{{ asset('assets') }}/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="{{ asset('assets/static/js/pages/horizontal-layout.js') }}"></script>
+    <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 
-    <script src="{{ asset('assets') }}/compiled/js/app.js"></script>
+    <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
 
-    <script src="{{ asset('assets') }}/static/js/pages/dashboard.js"></script>
+    <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script>
 
     <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.all.min.js') }}"></script>
