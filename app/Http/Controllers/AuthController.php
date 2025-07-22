@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function index()
     {
         $config = Config::all();
-        return view('auth.voterslogin', compact('config'));
+        return view('auth.votersLogin', compact('config'));
     }
 
     public function prosesLoginVoters(Request $request)
