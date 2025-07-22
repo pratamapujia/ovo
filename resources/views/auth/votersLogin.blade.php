@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Voters</title>
 
-    <link rel="shortcut icon" href="{{ asset('../assets/static/images/logo/OVO.svg') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="assets/static/images/logo/OVO.svg" type="image/x-icon" />
     <link rel="stylesheet" href="{{ asset('../assets/compiled/css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('../assets/extensions/sweetalert2/sweetalert2.min.css') }}" />
     <style>

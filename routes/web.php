@@ -19,9 +19,7 @@ Route::middleware(['guest:pemilih'])->group(function () {
 
 // Route untuk admin yang belum login
 Route::middleware(['guest:admin'])->group(function () {
-    Route::get('/panel ', function () {
-        return view('auth.adminlogin');
-    })->name('loginAdmin');
+    Route::get('/panel ', [AuthController::class, 'indexAdmin'])->name('loginAdmin');
     Route::post('/prosesLoginAdmin', [AuthController::class, 'prosesLoginAdmin'])->name('login.admin');
 });
 

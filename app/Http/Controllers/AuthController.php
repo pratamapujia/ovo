@@ -70,6 +70,11 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    public function indexAdmin()
+    {
+        return view('auth.adminLogin');
+    }
+
     public function prosesLoginAdmin(Request $request)
     {
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
