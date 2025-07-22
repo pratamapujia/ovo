@@ -1,0 +1,12 @@
+{
+    "$schema": "https://railway.com/railway.schema.json",
+    "build": {
+        "nixpacksPlan": {
+            "phases": {
+                "setup": {
+                    "cmds": ["php artisan storage:link"]
+                }
+            }
+        }
+    }
+}

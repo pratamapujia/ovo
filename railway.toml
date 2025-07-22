@@ -1,6 +1,0 @@
-# nixpacks.toml
-
-[phases.setup]
-# Perintah ini akan dijalankan setelah composer install
-# dan sebelum aplikasi dimulai
-cmd = "php artisan storage:link"
