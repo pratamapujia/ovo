@@ -7,8 +7,8 @@
     <title>Home Voters</title>
 
     <link rel="shortcut icon" href="{{ asset('assets') }}/static/images/logo/OVO.svg" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets') }}/compiled/css/app.css" />
+    <link rel="stylesheet" href="{{ asset('assets') }}/extensions/sweetalert2/sweetalert2.min.css" />
     <style>
       .header-top {
         background-color: #F2F7FF !important;
