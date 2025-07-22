@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Voters</title>
 
-    <link rel="shortcut icon" href="assets/static/images/logo/OVO.svg" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ asset('../assets/compiled/css/app.css') }}" />
-    <link rel="stylesheet" href="{{ asset('../assets/extensions/sweetalert2/sweetalert2.min.css') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets') }}/static/images/logo/OVO.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}" />
     <style>
       .header-top {
         background-color: #F2F7FF !important;
@@ -23,7 +23,7 @@
           <div class="header-top">
             <div class="container">
               <div class="logo">
-                <a href="/"><img src="{{ asset('../assets/static/images/logo/icon2.svg') }}" alt="Logo" style="height: 40px" /></a>
+                <a href="/"><img src="{{ asset('assets/static/images/logo/icon2.svg') }}" alt="Logo" style="height: 40px" /></a>
               </div>
               <div class="user-menu d-flex">
                 <div class="user-name text-end me-3">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-7 d-flex">
                   <div class="m-auto">
-                    <img src="{{ asset('../assets/static/images/bg/clip-voting.gif') }}" alt="GIF" />
+                    <img src="{{ asset('assets/static/images/bg/clip-voting.gif') }}" alt="GIF" />
                   </div>
                 </div>
               </div>
@@ -114,10 +114,10 @@
         </footer>
       </div>
     </div>
-    <script src="{{ asset('../assets/compiled/js/app.js') }}"></script>
-    <script src="{{ asset('../assets/extensions/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('../assets/extensions/sweetalert2/sweetalert2.all.min.js') }}"></script>
-    <script src="{{ asset('../assets/static/js/my.js') }}"></script>
+    <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
+    <script src="{{ asset('assets/extensions/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('assets/static/js/my.js') }}"></script>
     <script>
       function updateClock() {
         const now = new Date();
