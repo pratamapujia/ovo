@@ -42,7 +42,7 @@
           <div class="page-content">
             <div class="container">
               <div class="row mb-5">
-                <div class="col-5 pt-md-5 mb-3 text-center text-md-start">
+                <div class="col-lg-5 col-12 pt-md-5 mb-3 text-center text-md-start">
                   <h3 class="text-uppercase">Selamat Datang "Voters"</h3>
                   @foreach ($config as $data)
                     @if ($data->type == 0)
@@ -90,7 +90,7 @@
                     </div>
                   </form>
                 </div>
-                <div class="col-7 d-flex">
+                <div class="col-lg-7 col-12 d-flex">
                   <div class="m-auto">
                     <img src="{{ asset('assets/static/images/bg/clip-voting.gif') }}" alt="GIF" />
                   </div>

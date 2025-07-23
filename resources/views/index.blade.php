@@ -55,11 +55,6 @@
                     <span class="badge bg-primary">{{ Auth::user()->nama_pemilih }}</span>
                   </h6>
                 </div>
-
-                <!-- Burger button responsive -->
-                <a href="#" class="burger-btn d-block d-xl-none">
-                  <i class="bi bi-justify fs-3"></i>
-                </a>
               </div>
             </div>
           </div>
@@ -81,7 +76,7 @@
                   @php
                     $path = Storage::url('kandidat/' . $data->foto_kandidat);
                   @endphp
-                  <div class="col">
+                  <div class="col-sm-12 col-md-3 col-lg">
                     <div class="card">
                       <div class="card-content">
                         <div class="ratio ratio-1x1">
