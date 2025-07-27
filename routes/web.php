@@ -54,6 +54,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/dashboard/sudah-memilih', [DashboardController::class, 'sudahMemilih'])->name('sudah');
     Route::get('/dashboard/belum-memilih', [DashboardController::class, 'belumMemilih'])->name('belum');
 
+    // Route Hasil Pemilu
+    Route::get('/hasil', [DashboardController::class, 'hasilPemilu'])->name('hasil');
+
     // Route Download Template
     Route::get('/download-template', [DownloadTemplateController::class, 'template'])->name('download.template');
 });

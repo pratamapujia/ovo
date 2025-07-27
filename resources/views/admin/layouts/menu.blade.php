@@ -32,6 +32,12 @@
       </a>
     </li>
     <li class="sidebar-title">Setting</li>
+    <li class="sidebar-item {{ request()->is('hasil') ? 'active' : '' }} ">
+      <a href="{{ route('hasil') }}" class='sidebar-link'>
+        <i class="fas fa-chart-bar"></i>
+        <span>Hasil</span>
+      </a>
+    </li>
     <li class="sidebar-item {{ request()->is('user', 'user/*') ? 'active' : '' }} ">
       <a href="{{ route('user.index') }}" class='sidebar-link'>
         <i class="fas fa-id-badge"></i>

@@ -42,7 +42,7 @@
           <div class="page-content">
             <div class="container">
               <div class="row mb-5">
-                <div class="col-lg-5 col-12 pt-md-5 mb-3 text-center text-md-start">
+                <div class="col-lg-5 col-12 pt-md-5 mb-5 text-lg-center text-md-start">
                   <h3 class="text-uppercase">Selamat Datang "Voters"</h3>
                   @foreach ($config as $data)
                     @if ($data->type == 0)
@@ -52,7 +52,7 @@
                     @endif
                   @endforeach
                   <div class="flash-data" data-gagal="{{ Session::get('error') }}"></div>
-                  <form method="POST" action="{{ route('login.voters') }}" class="mt-3">
+                  <form method="POST" action="{{ route('login.voters') }}" class="mt-5">
                     @csrf
                     <div class="row">
                       <h5 class="text-center">Masuk untuk mulai memilih</h5>
@@ -107,7 +107,7 @@
               </div>
               <div class="float-end">
                 <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                  by <a href="https://ahmadsaugi.com">Saugi</a> Develop Apps by <a href="https://github.com/shofwanhadif">Shofwan</a></p>
+                  by <a href="https://github.com/shofwanhadif">Shofwan</a></p>
               </div>
             </div>
           </div>

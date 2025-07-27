@@ -94,54 +94,10 @@
             </a>
           </div>
         </div>
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4>Hasil Pemilihan</h4>
-            </div>
-            <div class="card-body">
-              <div id="chart-hasil"></div>
-            </div>
-          </div>
-        </div>
       </section>
     </div>
   </div>
 @endsection
 @section('script')
   <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-  <script>
-    const hasilData = @json($chartData);
-
-    // Ambil data kandidat dan suara
-    const suaraData = hasilData.map(item => item.total_suara);
-    const labelData = hasilData.map(item => item.nama_kandidat);
-
-    let optionsVisitorsProfile = {
-      series: suaraData,
-      labels: labelData,
-      colors: ["#435ebe", "#55c6e8", "#f1b44c", "#f46a6a"],
-      chart: {
-        type: "donut",
-        width: "100%",
-        height: "350px",
-        toolbar: {
-          show: true,
-        },
-      },
-      legend: {
-        position: "top",
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "50%",
-          },
-        },
-      },
-    }
-
-    const chart = new ApexCharts(document.querySelector("#chart-hasil"), optionsVisitorsProfile);
-    chart.render();
-  </script>
 @endsection

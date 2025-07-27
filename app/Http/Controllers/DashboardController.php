@@ -26,32 +26,13 @@ class DashboardController extends Controller
         $jumlah_pemilih = Pemilih::all()->count();
         $jumlah_kandidat = Kandidat::all()->count();
 
-        // Ambil data hasil pemilihan
-        $hasil = Pemilih::select('kandidat_id', DB::raw('count(*) as total_suara'))
-            ->groupBy('kandidat_id')
-            ->with('kandidat')
-            ->get();
-
-        // Siapkan data untuk chart
-        $chartData = [];
-
-        //filter hasil pemilihan yang memiliki kandidat
-        foreach ($hasil as $item) {
-            if ($item->kandidat && $item->kandidat->nama_kandidat) {
-                $chartData[] = [
-                    'nama_kandidat' => $item->kandidat->nama_kandidat,
-                    'total_suara' => $item->total_suara
-                ];
-            }
-        }
-
         // Hitung jumlah pemilih yang sudah memilih
         $jumlah_sudah_memilih = Pemilih::where('status', 1)->count();
 
         // Hitung jumlah pemilih yang belum memilih
         $jumlah_belum_memilih = Pemilih::where('status', 0)->count();
 
-        return view('admin.index', compact('jumlah_pemilih', 'jumlah_kandidat', 'chartData', 'jumlah_sudah_memilih', 'jumlah_belum_memilih'));
+        return view('admin.index', compact('jumlah_pemilih', 'jumlah_kandidat', 'jumlah_sudah_memilih', 'jumlah_belum_memilih'));
     }
 
     public function voting(Request $request)
@@ -83,5 +64,29 @@ class DashboardController extends Controller
         $pemilih = Pemilih::where('status', 0)->get();
         $kelas = Kelas::all();
         return view('admin.subdashboard.belumMemilih', compact('pemilih', 'kelas'));
+    }
+
+    public function hasilPemilu()
+    {
+        // Ambil data hasil pemilihan
+        $hasil = Pemilih::select('kandidat_id', DB::raw('count(*) as total_suara'))
+            ->groupBy('kandidat_id')
+            ->with('kandidat')
+            ->get();
+
+        // Siapkan data untuk chart
+        $chartData = [];
+
+        //filter hasil pemilihan yang memiliki kandidat
+        foreach ($hasil as $item) {
+            if ($item->kandidat && $item->kandidat->nama_kandidat) {
+                $chartData[] = [
+                    'nama_kandidat' => $item->kandidat->nama_kandidat,
+                    'total_suara' => $item->total_suara
+                ];
+            }
+        }
+
+        return view('admin.hasil', compact('chartData'));
     }
 }
