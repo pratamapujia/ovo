@@ -14,7 +14,7 @@
       </div>
       <section class="section">
         <div class="row">
-          <div class="col-6">
+          <div class="col-12">
             <div class="card">
               <div class="card-body">
                 <div id="chart-hasil"></div>
@@ -42,7 +42,7 @@
       chart: {
         type: "pie",
         width: "100%",
-        height: "500px",
+        height: "400px",
         toolbar: {
           show: true,
         },

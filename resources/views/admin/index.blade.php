@@ -43,7 +43,7 @@
               <div class="card-body px-4 py-4-5">
                 <div class="row">
                   <div class="col-12 col-sm-4 col-md-4 col-lg-5 d-flex justify-content-start ">
-                    <div class="stats-icon purple mb-2">
+                    <div class="stats-icon bg-warning mb-2">
                       <i class="fas fa-user"></i>
                     </div>
                   </div>
@@ -92,6 +92,22 @@
                 </div>
               </div>
             </a>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="card">
+              <div class="card-body px-4 py-4-5">
+                <div class="row">
+                  <div class="col-12 col-sm-4 col-md-4 col-lg-5 d-flex justify-content-start ">
+                    <div class="stats-icon bg-info mb-2">
+                      <i class="fas fa-poll-h"></i>
+                    </div>
+                  </div>
+                  <div class="col-12 col-sm-8 col-md-8 col-lg-7">
+                    <a href="{{ route('hasil') }}" class="btn btn-primary hover">Lihat Hasil Pemilu</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
