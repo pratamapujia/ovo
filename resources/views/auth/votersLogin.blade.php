@@ -86,7 +86,7 @@
                       <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block">Masuk</button>
                       </div>
-                      <p class="pt-2"><small class="text-danger">*Pastikan voters sudah mendapat token dari panitia</small></p>
+                      <p class="pt-2"><span class="text-danger">*Pastikan voters sudah mendapat <b>NIS</b> dan <b>Token</b> dari panitia</span></p>
                     </div>
                   </form>
                 </div>

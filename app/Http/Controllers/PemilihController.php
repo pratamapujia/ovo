@@ -21,7 +21,8 @@ class PemilihController extends Controller
     public function index()
     {
         $pemilih = Pemilih::orderby('nis', 'asc')->get();
-        return view('admin.pemilih.index', compact('pemilih'));
+        $kelas = Kelas::all();
+        return view('admin.pemilih.index', compact('pemilih', 'kelas'));
     }
 
     /**
@@ -139,10 +140,10 @@ class PemilihController extends Controller
         return redirect()->route('pemilih.index')->with('pesan', 'Data berhasil diimport 👍');
     }
 
-    public function exportIndex(Request $request)
+    public function exportIndex(string $id)
     {
-        $pemilih = Pemilih::all();
-        $kelas = Kelas::all();
+        $pemilih = Pemilih::where('kelas_id', $id)->with('kelas')->get();
+        $kelas = Kelas::find($id);
 
         $data = [
             'title' => 'Akun Pemilih',

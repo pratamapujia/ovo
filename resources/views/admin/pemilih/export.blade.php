@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Export Page</title>
-    <link rel="shortcut icon" href="assets/static/images/logo/OVO.svg" type="image/x-icon">
-    <link rel="stylesheet" crossorigin href="{{ asset('assets') }}/compiled/css/app.css">
+    <link rel="shortcut icon" href="{{ asset('assets/static/images/logo/OVO.svg') }}" type="image/x-icon">
+    <link rel="stylesheet" crossorigin href="{{ asset('assets/compiled/css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}" />
     <style>
       .p-scroll {
@@ -18,17 +18,17 @@
   </head>
 
   <body>
-    <script src="assets/static/js/initTheme.js"></script>
+    <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <nav class="navbar navbar-light sticky-top" style="background-color: #F2F7FF">
       <div class="container-fluid">
         <img src="{{ asset('assets/static/images/logo/icon2.svg') }}" alt="Logo" style="height: 40px">
-        {{-- <button onclick="window.print()" class="btn btn-primary">Print</button> --}}
+        <button onclick="window.print()" class="btn btn-primary"><i class="bi bi-printer-fill"></i> Print</button>
       </div>
     </nav>
 
     <div class="container-fluid">
       <div class="row">
-        @foreach ($pemilih as $d)
+        @forelse ($pemilih as $d)
           <div class="col-3">
             <div class="card border border-primary">
               <div class="card-content">
@@ -57,7 +57,13 @@
               </div>
             </div>
           </div>
-        @endforeach
+        @empty
+          <div class="col-12">
+            <div class="alert alert-danger text-center">
+              Tidak ada data pemilih yang ditemukan untuk kelas ini.
+            </div>
+          </div>
+        @endforelse
       </div>
     </div>
     <footer>
@@ -73,7 +79,7 @@
         </div>
       </div>
     </footer>
-    <script src="{{ asset('assets') }}/compiled/js/app.js"></script>
+    <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
   </body>
 
 </html>

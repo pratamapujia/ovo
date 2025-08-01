@@ -19,16 +19,16 @@
         <span>Kelas</span>
       </a>
     </li>
-    <li class="sidebar-item {{ request()->is('kandidat', 'kandidat/*') ? 'active' : '' }} ">
-      <a href="{{ route('kandidat.index') }}" class='sidebar-link'>
-        <i class="fas fa-users"></i>
-        <span>Kandidat</span>
-      </a>
-    </li>
     <li class="sidebar-item {{ request()->is('pemilih', 'pemilih/*') ? 'active' : '' }} ">
       <a href="{{ route('pemilih.index') }}" class='sidebar-link'>
         <i class="fas fa-user"></i>
         <span>Pemilih</span>
+      </a>
+    </li>
+    <li class="sidebar-item {{ request()->is('kandidat', 'kandidat/*') ? 'active' : '' }} ">
+      <a href="{{ route('kandidat.index') }}" class='sidebar-link'>
+        <i class="fas fa-users"></i>
+        <span>Kandidat</span>
       </a>
     </li>
     <li class="sidebar-title">Setting</li>
