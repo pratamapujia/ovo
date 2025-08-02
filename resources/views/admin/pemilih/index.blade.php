@@ -52,68 +52,95 @@
         </div>
       </div>
       <section class="section">
-        <div class="card">
-          <div class="card-header">
-            <a href="{{ route('pemilih.create') }}" class="btn icon icon-left btn-primary">
-              <i class="fas fa-plus"></i> Tambah Data
-            </a>
-            <div class="float-end">
-              <button class="btn icon icon-left btn-success" data-bs-toggle="modal" data-bs-target="#importModal">
-                <i class="fas fa-file-import"></i> Import
-              </button>
-              <button data-bs-toggle="modal" data-bs-target="#printModal" class="btn icon icon-left btn-danger">
-                <i class="fas fa-print"></i> Print
-              </button>
+        <div class="row">
+          <div class="col-sm-12 col-md-9 col-lg-10">
+            <div class="card">
+              <div class="card-header">
+                <a href="{{ route('pemilih.create') }}" class="btn icon icon-left btn-primary">
+                  <i class="fas fa-plus"></i> Tambah Data
+                </a>
+                <div class="float-end">
+                  <button class="btn icon icon-left btn-success" data-bs-toggle="modal" data-bs-target="#importModal">
+                    <i class="fas fa-file-import"></i> Import
+                  </button>
+                  <button data-bs-toggle="modal" data-bs-target="#printModal" class="btn icon icon-left btn-danger">
+                    <i class="fas fa-print"></i> Print
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <table class="table table-striped" id="table1">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>NIS</th>
+                      <th>Nama Pemilih</th>
+                      <th>Kelas</th>
+                      <th>Token</th>
+                      <th>Status</th>
+                      <th data-sortable="false">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($pemilih as $data)
+                      <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $data->nis }}</td>
+                        <td>{{ $data->nama_pemilih }}</td>
+                        <td>{{ $data->kelas->nama_kelas }}</td>
+                        <td>
+                          <span class="badge bg-primary">{{ $data->token }}</span>
+                        </td>
+                        <td>
+                          @if ($data->status == 1)
+                            <span class="badge bg-success">Sudah Memilih</span>
+                          @else
+                            <span class="badge bg-danger">Belum Memilih</span>
+                          @endif
+                        </td>
+                        <td>
+                          <a href="{{ route('pemilih.edit', $data->id) }}" class="btn icon icon-left btn-sm btn-warning">
+                            <li class="fas fa-edit"></li> Edit
+                          </a>
+                          <form action="{{ route('pemilih.destroy', $data->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            <input type="hidden" name="_method" value="delete">
+                            <button type="button" class="btn icon icon-left btn-danger btn-sm btn-delete">
+                              <li class="fas fa-trash"></li> Hapus
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="card-body">
-            <table class="table table-striped" id="table1">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>NIS</th>
-                  <th>Nama Pemilih</th>
-                  <th>Kelas</th>
-                  <th>Token</th>
-                  <th>Status</th>
-                  <th data-sortable="false">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($pemilih as $data)
-                  <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $data->nis }}</td>
-                    <td>{{ $data->nama_pemilih }}</td>
-                    <td>{{ $data->kelas->nama_kelas }}</td>
-                    <td>
-                      <span class="badge bg-primary">{{ $data->token }}</span>
-                    </td>
-                    <td>
-                      @if ($data->status == 1)
-                        <span class="badge bg-success">Sudah Memilih</span>
-                      @else
-                        <span class="badge bg-danger">Belum Memilih</span>
-                      @endif
-                    </td>
-                    <td>
-                      <a href="{{ route('pemilih.edit', $data->id) }}" class="btn icon icon-left btn-sm btn-warning">
-                        <li class="fas fa-edit"></li> Edit
-                      </a>
-                      <form action="{{ route('pemilih.destroy', $data->id) }}" method="POST" class="d-inline">
-                        @csrf
-                        <input type="hidden" name="_method" value="delete">
-                        <button type="button" class="btn icon icon-left btn-danger btn-sm btn-delete">
-                          <li class="fas fa-trash"></li> Hapus
-                        </button>
-                      </form>
-                    </td>
-                  </tr>
-                @endforeach
-              </tbody>
-            </table>
+          <div class="col-sm-12 col-md-4 col-lg-2">
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-striped" id="table1">
+                  <thead>
+                    <tr>
+                      <th>Nama Kelas</th>
+                      <th>Total Pemilih</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($kelas as $data)
+                      <tr>
+                        <td>{{ $data->nama_kelas }}</td>
+                        <td>{{ $data->pemilih_count }}</td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
+
       </section>
     </div>
   </div>
