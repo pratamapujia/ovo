@@ -8,7 +8,7 @@ class DownloadTemplateController extends Controller
 {
     public function template()
     {
-        $file_path = storage_path('app/public/template.xlsx');
+        $file_path = public_path('templates/template.xlsx');
         $fileName = 'template.xlsx';
 
         if (file_exists($file_path)) {
