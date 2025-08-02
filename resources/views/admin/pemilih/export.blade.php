@@ -14,6 +14,40 @@
         overflow-y: auto;
         line-height: 1.5em;
       }
+
+      @media print {
+
+        /* 1. Sembunyikan elemen yang tidak perlu dicetak */
+        nav.navbar,
+        footer {
+          display: none !important;
+        }
+
+        /* 2. Aturan paling penting: cegah kartu terpotong antar halaman */
+        .card {
+          break-inside: avoid;
+          /* Properti modern */
+          page-break-inside: avoid;
+          /* Properti lama untuk kompatibilitas */
+          margin-bottom: 20px;
+          /* Beri sedikit jarak antar kartu */
+        }
+
+        /* 3. Atur ulang layout agar sesuai kertas (opsional, tapi disarankan) */
+        .container-fluid {
+          padding: 0 !important;
+        }
+
+        /* 4. Sesuaikan kolom agar lebih pas di kertas (misal: 2 kolom) */
+        .col-sm-6,
+        .col-md-4,
+        .col-lg-3 {
+          width: 30% !important;
+          /* Paksa jadi 2 kolom */
+          float: left;
+          /* Pastikan kolom tetap berdampingan */
+        }
+      }
     </style>
   </head>
 
@@ -29,7 +63,7 @@
     <div class="container-fluid p-5">
       <div class="row">
         @forelse ($pemilih as $d)
-          <div class="col-sm-6 col-md-4 col-lg-4">
+          <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="card border border-primary">
               <div class="card-content">
                 <div class="card-body">
