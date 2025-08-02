@@ -12,10 +12,10 @@ class DownloadTemplateController extends Controller
         $fileName = 'template.xlsx';
 
         // Pastikan file template ada
-        if (!file_exists($file_Path)) {
+        if (!file_exists($file_path)) {
             abort(404, 'File template tidak ditemukan.');
         }
 
-        return response()->download($file_Path, $fileName);
+        return response()->download($file_path, $fileName);
     }
 }
