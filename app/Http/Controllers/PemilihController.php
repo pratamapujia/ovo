@@ -22,7 +22,7 @@ class PemilihController extends Controller
     public function index()
     {
         $pemilih = Pemilih::orderby('nis', 'asc')->get();
-        $kelas = Kelas::all();
+        $kelas = Kelas::withCount('pemilih')->get();
         return view('admin.pemilih.index', compact('pemilih', 'kelas'));
     }
 

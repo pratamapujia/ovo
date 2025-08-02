@@ -162,7 +162,7 @@
             <select name="nama_kelas" id="nama_kelas" class="choices form-select">
               <option value="" disabled selected>-- Pilih Salah Satu --</option>
               @foreach ($kelas as $item)
-                <option value="{{ $item->id }}">{{ $item->nama_kelas }}</option>
+                <option value="{{ $item->id }}">{{ $item->nama_kelas }} || ({{ $item->pemilih_count }} Pemilih)</option>
               @endforeach
             </select>
           </div>
