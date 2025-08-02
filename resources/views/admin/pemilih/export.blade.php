@@ -26,10 +26,10 @@
       </div>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid p-5">
       <div class="row">
         @forelse ($pemilih as $d)
-          <div class="col-3">
+          <div class="col-sm-6 col-md-4 col-lg-4">
             <div class="card border border-primary">
               <div class="card-content">
                 <div class="card-body">
