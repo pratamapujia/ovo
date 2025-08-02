@@ -41,10 +41,10 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::resource('user', UserController::class);
 
     // Route Import
-    Route::post('/import', [PemilihController::class, 'import'])->name('pemilih.import');
+    Route::post('/pemilih/import', [PemilihController::class, 'import'])->name('pemilih.import');
 
     // Route Export
-    Route::get('/export/{id}', [PemilihController::class, 'exportIndex'])->name('pemilih.export');
+    Route::get('/pemilih/export/{id}', [PemilihController::class, 'exportIndex'])->name('pemilih.export');
 
     // Route Config
     Route::get('/configs', [ConfigController::class, 'index'])->name('config.index');

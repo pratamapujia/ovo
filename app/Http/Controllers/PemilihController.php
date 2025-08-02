@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use PDF;
 
 class PemilihController extends Controller
@@ -135,9 +136,42 @@ class PemilihController extends Controller
 
     public function import(Request $request)
     {
-        Excel::import(new VotersImport, $request->file('input_excel'));
+        // 1. Validasi file yang diupload
+        $request->validate([
+            'input_excel' => 'required|mimes:xls,xlsx'
+        ]);
 
-        return redirect()->route('pemilih.index')->with('pesan', 'Data berhasil diimport 👍');
+        try {
+            // 2. Lakukan import
+            Excel::import(new VotersImport, $request->file('input_excel'));
+            // 3. Jika berhasil, kembalikan dengan pesan sukses
+            return redirect()->route('pemilih.index')->with('pesan', 'Data pemilih berhasil diimport! 👍');
+        } catch (ValidationException $e) {
+            // 4. Jika terjadi error validasi
+            $failures = $e->failures();
+            $errorMessages = [];
+
+            foreach ($failures as $failure) {
+                $errorMessages[] = "Baris ke-<b>" . $failure->row() . "</b>: " . implode(', ', $failure->errors());
+            }
+
+            // Siapkan data error untuk dikirim sebagai array
+            $pesanGagal = [
+                'type' => 'danger',
+                'title' => 'Gagal Mengimpor Data!',
+                'body' => 'Terdapat beberapa kesalahan pada file Anda:',
+                'details' => $errorMessages // Kirim detail error dalam array terpisah
+            ];
+            return redirect()->route('pemilih.index')->with('pesan_alert', $pesanGagal);
+        } catch (\Exception $e) {
+            // 5. Tangani error umum lainnya
+            $pesanGagal = [
+                'type' => 'danger',
+                'title' => 'Terjadi Kesalahan!',
+                'body' => 'Tidak dapat memproses file: ' . $e->getMessage()
+            ];
+            return redirect()->route('pemilih.index')->with('pesan_alert', $pesanGagal);
+        }
     }
 
     public function exportIndex(string $id)

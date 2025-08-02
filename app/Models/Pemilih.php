@@ -14,7 +14,7 @@ class Pemilih extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'voters';
-    protected $fillable = ['nama_pemilih', 'nis', 'kelas_id', 'kandidat_id', 'token', 'status'];
+    protected $fillable = ['nama_pemilih', 'nis', 'kelas_id', 'kandidat_id', 'token', 'status', 'password'];
 
     protected $hidden = [
         'token',
@@ -29,6 +29,4 @@ class Pemilih extends Authenticatable
     {
         return $this->belongsTo(Kandidat::class);
     }
-
-    
 }

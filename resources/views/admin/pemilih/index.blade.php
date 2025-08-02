@@ -12,6 +12,28 @@
     {{-- Alert --}}
     <div class="flash-data" data-berhasil="{{ Session::get('pesan') }}"></div>
     <div class="flash-data" data-gagal="{{ Session::get('gagal') }}"></div>
+    @if (session()->has('pesan_alert'))
+      @php
+        $pesan = session('pesan_alert');
+      @endphp
+      <div class="alert alert-{{ $pesan['type'] }} alert-dismissible fade show" role="alert">
+        <h5 class="alert-heading">{{ $pesan['title'] }}</h5>
+        <p>{{ $pesan['body'] }}</p>
+
+        {{-- Jika ada detail error, tampilkan sebagai daftar --}}
+        @if (isset($pesan['details']))
+          <hr>
+          <ul class="mb-0">
+            @foreach ($pesan['details'] as $detail)
+              {{-- Kita gunakan {!! !!} agar tag <b> bisa dirender --}}
+              <li>{!! $detail !!}</li>
+            @endforeach
+          </ul>
+        @endif
+
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
     {{-- End Alert --}}
     <div class="page-heading">
       <div class="page-title">
@@ -37,7 +59,7 @@
             </a>
             <div class="float-end">
               <button class="btn icon icon-left btn-success" data-bs-toggle="modal" data-bs-target="#importModal">
-                <i class="fas fa-file-import"></i> Excel
+                <i class="fas fa-file-import"></i> Import
               </button>
               <button data-bs-toggle="modal" data-bs-target="#printModal" class="btn icon icon-left btn-danger">
                 <i class="fas fa-print"></i> Print
