@@ -70,20 +70,20 @@
                   <div class="card-title">
                     <div class="row">
                       <div class="col-12">
-                        <h6>{{ $d->nama_pemilih }}</h6>
+                        <h5>{{ $d->nama_pemilih }}</h5>
                       </div>
                       <div class="col-12">
-                        <small>Kelas : {{ $d->kelas->nama_kelas }}</small>
+                        <small>Kelas : <strong class="text-primary">{{ $d->kelas->nama_kelas }}</strong></small>
                       </div>
                     </div>
                   </div>
                   <div class="card-text">
                     <div class="row">
                       <div class="col-5">
-                        <p class="subtitle">NIS : {{ $d->nis }}</p>
+                        <p class="subtitle">NIS : <strong class="text-primary">{{ $d->nis }}</strong></p>
                       </div>
                       <div class="col-7">
-                        <p>Token : <span class="badge bg-light-primary">{{ $d->token }}</span></p>
+                        <p>Token : <strong class="text-primary">{{ $d->token }}</strong></p>
                       </div>
                     </div>
                   </div>
