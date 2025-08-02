@@ -42,7 +42,7 @@
         .col-sm-6,
         .col-md-4,
         .col-lg-3 {
-          width: 30% !important;
+          width: 33% !important;
           /* Paksa jadi 2 kolom */
           float: left;
           /* Pastikan kolom tetap berdampingan */
@@ -70,7 +70,7 @@
                   <div class="card-title">
                     <div class="row">
                       <div class="col-12">
-                        <h5>{{ $d->nama_pemilih }}</h5>
+                        <h6>{{ $d->nama_pemilih }}</h6>
                       </div>
                       <div class="col-12">
                         <small>Kelas : <strong class="text-primary">{{ $d->kelas->nama_kelas }}</strong></small>
