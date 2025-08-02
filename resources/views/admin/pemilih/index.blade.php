@@ -117,7 +117,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-4 col-lg-2">
+          <div class="col-sm-12 col-md-3 col-lg-2">
             <div class="card">
               <div class="card-body">
                 <table class="table table-striped" id="table1">
