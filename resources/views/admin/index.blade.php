@@ -1,6 +1,6 @@
 @extends('admin.layouts.index')
 @section('title')
-  <title>Welcome to OVO</title>
+  <title>OVO | Admin Dashboard</title>
   <style>
     .hover:hover {
       transform: scale(1.01);

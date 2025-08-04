@@ -83,16 +83,16 @@
                           <img src="{{ $path }}" class="card-img-top img-fluid" alt="Foto Kandidat">
                         </div>
                         <div class="card-body p-2">
-                          <h5 class="card-title text-center">Paslon {{ $loop->iteration }}</h5>
+                          <h5 class="card-title text-center">{{ $data->nama_kandidat }}</h5>
                           <div class="row p-2">
                             <div class="col-6">
-                              <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#detail{{ $data->id }}">Detail</button>
+                              <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#detail{{ $data->id }}">Lihat Visi Misi</button>
                             </div>
                             <div class="col-6">
                               <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
                                 @csrf
                                 <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
-                                <button type="button" class="btn btn-primary w-100 btn-vote">Pilih</button>
+                                <button type="button" class="btn btn-primary w-100 btn-vote" data-nama-kandidat="{{ $data->nama_kandidat }}">Pilih</button>
                               </form>
                             </div>
                           </div>
@@ -103,7 +103,7 @@
 
                   {{-- Modal Detail --}}
                   <div class="modal modal-borderless fade" id="detail{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="detail{{ $data->id }}Title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
                       <div class="modal-content">
                         {{-- <div class="modal-header">
                           <h5 class="modal-title" id="detail{{ $data->id }}Title">{{ $data->nama_kandidat }}</h5>
@@ -127,12 +127,12 @@
                           <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Close</span>
+                            <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
+                              @csrf
+                              <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
+                              <button type="button" class="btn btn-primary btn-vote" data-nama-kandidat="{{ $data->nama_kandidat }}">Pilih</button>
+                            </form>
                           </button>
-                          <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
-                            @csrf
-                            <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
-                            <button type="button" class="btn btn-primary btn-vote">Pilih</button>
-                          </form>
                         </div>
                       </div>
                     </div>
@@ -173,7 +173,7 @@
       document.querySelectorAll('.btn-vote').forEach(button => {
         button.addEventListener('click', function() {
           const form = this.closest('.vote-form'); // Dapatkan form terdekat
-          const candidateName = this.textContent; // Ambil nama kandidat
+          const candidateName = this.dataset.namaKandidat; // Ambil nama kandidat dari data-nama-kandidat di button pilih
 
           Swal.fire({
             title: `Benar ingin memilih ${candidateName}?`,
@@ -183,7 +183,7 @@
             confirmButtonColor: '#435ebe',
             cancelButtonColor: '#d33',
             confirmButtonText: `Ya, pilih ${candidateName} !`,
-            cancelButtonText: 'Batal'
+            cancelButtonText: 'Batal',
           }).then((result) => {
             if (result.isConfirmed) {
               form.submit(); // Kirim form jika konfirmasi

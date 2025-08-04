@@ -37,7 +37,7 @@
             @csrf
             <div class="row">
               @foreach ($config as $data)
-                <div class="col-6">
+                <div class="col-4">
                   <div class="form-group">
                     <label class="form-label">{{ $data->label }}</label>
                     @if ($data->type == 0)
