@@ -103,7 +103,7 @@
                 </div>
                 <div class="col-lg-7 col-12 d-flex">
                   <div class="m-auto">
-                    <img src="{{ asset('assets/static/images/bg/clip-voting.gif') }}" alt="GIF" />
+                    <img src="{{ asset('assets/static/images/bg/clip-voting2.gif') }}" alt="GIF" />
                   </div>
                 </div>
               </div>
