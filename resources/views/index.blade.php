@@ -116,11 +116,11 @@
                           <h4 class="modal-title my-2 text-center">{{ $data->nama_kandidat }}</h4>
                           <div class="my-2">
                             <h5 class="modal-title">Visi</h5>
-                            <p>{{ $data->visi }}</p>
+                            <p>{!! $data->visi !!}</p>
                           </div>
                           <div class="my-2">
                             <h5 class="modal-title">Misi</h5>
-                            <p>{{ $data->misi }}</p>
+                            <p>{!! $data->misi !!}</p>
                           </div>
                         </div>
                         <div class="modal-footer">

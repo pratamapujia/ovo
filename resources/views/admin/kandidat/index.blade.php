@@ -44,7 +44,7 @@
                   <th>Nama Kandidat</th>
                   <th>Visi</th>
                   <th>Misi</th>
-                  <th data-sortable="false">Aksi</th>
+                  <th data-sortable="false" width="12%">Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -59,13 +59,13 @@
                         @if (!empty($data->foto_kandidat))
                           <img src="{{ url($path) }}" alt="Avatar">
                         @else
-                          <img src="{{ asset('assets/static/images/avatar/avatar-1.png') }}" alt="">
+                          <img src="{{ asset('assets/static/images/none.png') }}" alt="">
                         @endif
                       </div>
                     </td>
                     <td>{{ $data->nama_kandidat }}</td>
-                    <td>{{ $data->visi }}</td>
-                    <td>{{ $data->misi }}</td>
+                    <td>{!! $data->visi !!}</td>
+                    <td>{!! $data->misi !!}</td>
                     <td>
                       <a href="{{ route('kandidat.edit', $data->id) }}" class="btn icon icon-left btn-sm btn-warning">
                         <li class="fas fa-edit"></li> Edit

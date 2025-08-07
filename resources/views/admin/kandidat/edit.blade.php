@@ -47,9 +47,9 @@
             @csrf
             @method('PUT')
             <div class="row">
-              <div class="col-sm-12 col-md-6 col-lg-6">
+              <div class="col-sm-12 col-md-4 col-lg-2">
                 <div class="form-group">
-                  <label for="no_urut">Nomor Urut</label>
+                  <label class="form-label" for="no_urut">Nomor Urut</label>
                   <input type="number" class="form-control @error('no_urut') is-invalid @enderror" name="no_urut" placeholder="Masukkan Nomor Urut" value="{{ old('no_urut', $kandidat->no_urut) }}">
                   @error('no_urut')
                     <div class="invalid-feedback">
@@ -58,19 +58,18 @@
                   @enderror
                 </div>
               </div>
-              <div class="col-sm-12 col-md-6 col-lg-6">
+              <div class="col-sm-12 col-md-4 col-lg-5>
                 <div class="form-group">
-                  <label for="nama_kandidat" class="form-label">Nama Kandidat</label>
-                  <input type="text" class="form-control" id="nama_kandidat" name="nama_kandidat" value="{{ old('nama_kandidat', $kandidat->nama_kandidat) }}" required>
-                </div>
+                <label for="nama_kandidat" class="form-label">Nama Kandidat</label>
+                <input type="text" class="form-control" id="nama_kandidat" name="nama_kandidat" value="{{ old('nama_kandidat', $kandidat->nama_kandidat) }}" required>
               </div>
-              <div class="col-sm-12 col-md-6 col-lg-5">
+              <div class="col-sm-12 col-md-4 col-lg-5">
                 <div class="form-group">
                   <label class="form-label" for="foto_kandidat">Foto Kandidat</label>
                   <input type="file" class="form-control @error('foto_kandidat') is-invalid @enderror" name="foto_kandidat" accept="image/*">
 
                   @if ($kandidat->foto_kandidat)
-                    <img src="{{ asset('storage/kandidat/' . $kandidat->foto_kandidat) }}" alt="Foto Kandidat" class="img-thumbnail mt-2" style="max-width: 200px;">
+                    <img src="{{ asset('storage/kandidat/' . $kandidat->foto_kandidat) }}" alt="Foto Kandidat" class="img-thumbnail mt-2" style="max-width: 150px;">
                   @endif
 
                   @error('foto_kandidat')
@@ -85,13 +84,13 @@
                   <div class="col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                       <label for="visi" class="form-label">Visi</label>
-                      <textarea class="form-control" id="visi" name="visi" rows="3" required>{{ old('visi', $kandidat->visi) }}</textarea>
+                      <textarea class="form-control" id="default" name="visi" required>{{ old('visi', $kandidat->visi) }}</textarea>
                     </div>
                   </div>
                   <div class="col-sm-12 col-md-6 col-lg-6">
                     <div class="form-group">
                       <label for="misi" class="form-label">Misi</label>
-                      <textarea class="form-control" id="misi" name="misi" rows="3" required>{{ old('misi', $kandidat->misi) }}</textarea>
+                      <textarea class="form-control" id="default" name="misi" required>{{ old('misi', $kandidat->misi) }}</textarea>
                     </div>
                   </div>
                 </div>
@@ -112,4 +111,8 @@
       </div>
     </div>
   </div>
+@endsection
+@section('script')
+  <script src="{{ asset('assets/extensions/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('assets/static/js/pages/tinymce.js') }}"></script>
 @endsection
