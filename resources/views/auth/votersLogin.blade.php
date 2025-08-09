@@ -124,16 +124,20 @@
                   <div class="row gy-4">
                     {{-- Lakukan perulangan untuk setiap data calon --}}
                     @forelse ($kandidat as $data)
-                      <div class="col-md-3 col-lg">
+                      <div class="col-sm-12 col-md-6 col-lg">
                         <div class="card h-100">
                           @php
                             $path = Storage::url('kandidat/' . $data->foto_kandidat);
                           @endphp
-                          <img src="{{ url($path) }}" class="card-img-top" alt="Foto {{ $data->nama_kandidat }}" style="height: 300px; object-fit: cover;">
-                          <div class="card-body text-center">
-                            <h5 class="card-title">{{ $data->nama_kandidat }}</h5>
-                            <div class="card-text text-muted">{!! $data->visi !!}</div>
-                            <div class="card-text text-muted">{!! $data->misi !!}</div>
+                          <img src="{{ url($path) }}" class="card-img-top" alt="Foto {{ $data->nama_kandidat }}" style="height: 300px; object-fit: cover; border-radius: 10px">
+                          <div class="card-body">
+                            <h5 class="card-title text-center">{{ $data->nama_kandidat }}</h5>
+                            <div class="card-text text-muted" style="text-align: justify">
+                              <p>Visi :</p>
+                              {!! $data->visi !!}
+                              <p>Misi :</p>
+                              {!! $data->misi !!}
+                            </div>
                           </div>
                         </div>
                       </div>
