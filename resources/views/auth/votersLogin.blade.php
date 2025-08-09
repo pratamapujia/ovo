@@ -53,7 +53,7 @@
           <div class="page-content">
             <div class="container">
               <div class="row mb-5">
-                <div class="col-lg-5 col-12 pt-md-5 mb-5 text-lg-center text-md-start">
+                <div class="col-lg-5 col-12 pt-md-5 mb-5 text-center">
                   <h3 class="text-uppercase">Selamat Datang Voters</h3>
                   @foreach ($config as $data)
                     @if ($data->type == 0)
