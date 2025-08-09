@@ -132,8 +132,8 @@
                           <img src="{{ url($path) }}" class="card-img-top" alt="Foto {{ $data->nama_kandidat }}" style="height: 300px; object-fit: cover;">
                           <div class="card-body text-center">
                             <h5 class="card-title">{{ $data->nama_kandidat }}</h5>
-                            <p class="card-text text-muted">"{!! $data->visi !!}"</p>
-                            <p class="card-text text-muted">"{!! $data->misi !!}"</p>
+                            <div class="card-text text-muted">{!! $data->visi !!}</div>
+                            <div class="card-text text-muted">{!! $data->misi !!}</div>
                           </div>
                         </div>
                       </div>
