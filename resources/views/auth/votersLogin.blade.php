@@ -110,6 +110,48 @@
             </div>
           </div>
         </div>
+
+        {{-- Modal Kandidat --}}
+        <div class="modal fade" id="modalKandidat" tabindex="-1" aria-labelledby="modalKandidatLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalKandidatLabel">📜 Para Calon Ketua dan Wakil OSIS 📜</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row gy-4">
+                    {{-- Lakukan perulangan untuk setiap data calon --}}
+                    @forelse ($kandidat as $data)
+                      <div class="col-md-3 col-lg">
+                        <div class="card h-100">
+                          @php
+                            $path = Storage::url('kandidat/' . $data->foto_kandidat);
+                          @endphp
+                          <img src="{{ url($path) }}" class="card-img-top" alt="Foto {{ $data->nama_kandidat }}" style="height: 300px; object-fit: cover;">
+                          <div class="card-body text-center">
+                            <h5 class="card-title">{{ $data->nama_kandidat }}</h5>
+                            <p class="card-text text-muted">"{{ $data->visi }}"</p>
+                            <p class="card-text text-muted">"{{ $data->misi }}"</p>
+                          </div>
+                        </div>
+                      </div>
+                    @empty
+                      <div class="col-12 text-center">
+                        <p class="text-danger">Belum ada data calon yang tersedia saat ini.</p>
+                      </div>
+                    @endforelse
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <footer class="fixed-bottom">
           <div class="container">
             <div class="footer clearfix mb-0 text-muted">
@@ -147,6 +189,13 @@
 
       setInterval(updateClock, 1000);
       updateClock();
+
+      $(document).ready(function() {
+        // Cek apakah ada data calon sebelum menampilkan modal
+        @if (isset($kandidat) && $kandidat->count() > 0)
+          $('#modalKandidat').modal('show');
+        @endif
+      });
     </script>
   </body>
 

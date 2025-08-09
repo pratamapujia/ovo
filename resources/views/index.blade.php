@@ -77,24 +77,20 @@
                     $path = Storage::url('kandidat/' . $data->foto_kandidat);
                   @endphp
                   <div class="col-sm-12 col-md-3 col-lg">
-                    <div class="card">
-                      <div class="card-content">
-                        <div class="ratio ratio-1x1">
-                          <img src="{{ $path }}" class="card-img-top img-fluid" alt="Foto Kandidat">
-                        </div>
-                        <div class="card-body p-2">
-                          <h5 class="card-title text-center">{{ $data->nama_kandidat }}</h5>
-                          <div class="row p-2">
-                            <div class="col-6">
-                              <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#detail{{ $data->id }}">Lihat Visi Misi</button>
-                            </div>
-                            <div class="col-6">
-                              <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
-                                @csrf
-                                <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
-                                <button type="button" class="btn btn-primary w-100 btn-vote" data-nama-kandidat="{{ $data->nama_kandidat }}">Pilih</button>
-                              </form>
-                            </div>
+                    <div class="card h-100">
+                      <img src="{{ url($path) }}" class="card-img-top" alt="Foto {{ $data->nama_kandidat }}" style="height: 300px; object-fit: cover;">
+                      <div class="card-body p-2">
+                        <h5 class="card-title text-center">{{ $data->nama_kandidat }}</h5>
+                        <div class="row p-2">
+                          <div class="col-6">
+                            <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#detail{{ $data->id }}">Lihat Visi Misi</button>
+                          </div>
+                          <div class="col-6">
+                            <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
+                              @csrf
+                              <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
+                              <button type="button" class="btn btn-primary w-100 btn-vote" data-nama-kandidat="{{ $data->nama_kandidat }}">Pilih</button>
+                            </form>
                           </div>
                         </div>
                       </div>
@@ -144,7 +140,7 @@
 
         </div>
 
-        <footer>
+        <footer class="pt-5">
           <div class="container">
             <div class="footer clearfix mb-0 text-muted">
               <div class="float-start">
