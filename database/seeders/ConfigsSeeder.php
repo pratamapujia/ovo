@@ -24,13 +24,19 @@ class ConfigsSeeder extends Seeder
         Config::create([
             'name' => 'app_name',
             'label' => 'Nama Aplikasi',
-            'value' => 'Pilkosis',
+            'value' => 'Online Voting',
             'type' => 0,
         ]);
 
         Config::create([
             'name'  => 'app_logo',
             'label' => 'Logo',
+            'type'  => 2
+        ]);
+
+        Config::create([
+            'name'  => 'poster',
+            'label' => 'Poster',
             'type'  => 2
         ]);
 

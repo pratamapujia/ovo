@@ -25,10 +25,10 @@
               <div class="logo">
                 @foreach ($config as $data)
                   @if ($data->type == 2)
-                    @php
-                      $path = Storage::url('apps/' . $data->value);
-                    @endphp
-                    @if ($data->value)
+                    @if ($data->name == 'app_logo')
+                      @php
+                        $path = Storage::url('apps/' . $data->value);
+                      @endphp
                       <a href="/">
                         <img src="{{ $path }}" alt="Logo" style="height: 40px">
                       </a>
@@ -57,9 +57,7 @@
                   <h3 class="text-uppercase">Selamat Datang Voters</h3>
                   @foreach ($config as $data)
                     @if ($data->type == 0)
-                      @if ($data->value)
-                        <h5>Mari Kita Sukseskan {{ $data->value }}</h5>
-                      @endif
+                      <h5>Mari Kita Sukseskan {{ $data->value }}</h5>
                     @endif
                   @endforeach
                   <div class="flash-data" data-gagal="{{ Session::get('error') }}"></div>
@@ -123,29 +121,20 @@
                 <div class="container-fluid">
                   <div class="row gy-4">
                     {{-- Lakukan perulangan untuk setiap data calon --}}
-                    @forelse ($kandidat as $data)
-                      <div class="col-sm-12 col-md-6 col-lg">
-                        <div class="card h-100">
-                          @php
-                            $path = Storage::url('kandidat/' . $data->foto_kandidat);
-                          @endphp
-                          <img src="{{ url($path) }}" class="card-img-top" alt="Foto {{ $data->nama_kandidat }}" style="height: 300px; object-fit: cover; border-radius: 10px">
-                          <div class="card-body">
-                            <h5 class="card-title text-center">{{ $data->nama_kandidat }}</h5>
-                            <div class="card-text text-muted" style="text-align: justify">
-                              <p>Visi :</p>
-                              {!! $data->visi !!}
-                              <p>Misi :</p>
-                              {!! $data->misi !!}
+                    @foreach ($config as $data)
+                      @if ($data->type == 2)
+                        @if ($data->name == 'poster')
+                          <div class="col-sm-12 col-md-6 col-lg">
+                            <div class="card h-100">
+                              @php
+                                $path = Storage::url('apps/' . $data->value);
+                              @endphp
+                              <img src="{{ url($path) }}" class="card-img-top" alt="poster" style="object-fit: cover; border-radius: 10px">
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    @empty
-                      <div class="col-12 text-center">
-                        <p class="text-danger">Belum ada data calon yang tersedia saat ini.</p>
-                      </div>
-                    @endforelse
+                        @endif
+                      @endif
+                    @endforeach
                   </div>
                 </div>
               </div>
