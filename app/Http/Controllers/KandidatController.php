@@ -62,7 +62,7 @@ class KandidatController extends Controller
 
         if ($request->hasFile('foto_kandidat')) {
             $file = $request->file('foto_kandidat');
-            $nama_file = time() . "_" . $kandidat->nama_kandidat . "." . $file->getClientOriginalExtension();
+            $nama_file = time() . "_" . $kandidat->nama_kandidat . "." . 'webp';
             $file->move(storage_path('app/public/kandidat'), $nama_file);
             $kandidat->foto_kandidat = $nama_file;
         }
@@ -129,7 +129,7 @@ class KandidatController extends Controller
             }
 
             $file = $request->file('foto_kandidat');
-            $nama_file = time() . "_" . $kandidat->nama_kandidat . "." . $file->getClientOriginalExtension();
+            $nama_file = time() . "_" . $kandidat->nama_kandidat . "." . 'webp';
             $file->move(storage_path('app/public/kandidat'), $nama_file);
             $kandidat->foto_kandidat = $nama_file;
         }

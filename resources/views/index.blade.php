@@ -34,7 +34,7 @@
                     @php
                       $path = Storage::url('apps/' . $data->value);
                     @endphp
-                    @if ($data->value)
+                    @if ($data->name == 'app_logo')
                       <a href="{{ route('dashboard.voters') }}">
                         <img src="{{ $path }}" alt="Logo" style="height: 40px">
                       </a>
