@@ -83,7 +83,7 @@
                         <h5 class="card-title text-center">{{ $data->nama_kandidat }}</h5>
                         <div class="row p-2">
                           <div class="col-6">
-                            <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#detail{{ $data->id }}">Lihat Visi Misi</button>
+                            <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#detail{{ $data->id }}">Visi Misi</button>
                           </div>
                           <div class="col-6">
                             <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
@@ -99,7 +99,7 @@
 
                   {{-- Modal Detail --}}
                   <div class="modal modal-borderless fade" id="detail{{ $data->id }}" tabindex="-1" role="dialog" aria-labelledby="detail{{ $data->id }}Title" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
                       <div class="modal-content">
                         {{-- <div class="modal-header">
                           <h5 class="modal-title" id="detail{{ $data->id }}Title">{{ $data->nama_kandidat }}</h5>
