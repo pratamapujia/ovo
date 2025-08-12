@@ -123,11 +123,6 @@
                           <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                             <i class="bx bx-x d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Close</span>
-                            <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
-                              @csrf
-                              <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
-                              <button type="button" class="btn btn-primary btn-vote" data-nama-kandidat="{{ $data->nama_kandidat }}">Pilih</button>
-                            </form>
                           </button>
                         </div>
                       </div>
