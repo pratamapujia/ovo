@@ -189,4 +189,10 @@ class PemilihController extends Controller
         // return $pdf->download('akun-pemilih.pdf');
         return view('admin.pemilih.export', $data);
     }
+
+    public function resetStatus(Request $request)
+    {
+        Pemilih::where('status', 1)->update(['status' => 0, 'kandidat_id' => null]);
+        return redirect()->back()->with('pesan', 'Status pemilih berhasil direset 👍');
+    }
 }

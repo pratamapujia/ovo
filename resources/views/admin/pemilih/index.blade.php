@@ -64,6 +64,12 @@
               <button data-bs-toggle="modal" data-bs-target="#printModal" class="btn icon icon-left btn-danger">
                 <i class="fas fa-print"></i> Print
               </button>
+              <form action="{{ route('pemilih.reset') }}" method="POST" class="d-inline" id="form-reset">
+                @csrf
+                <button type="button" class="btn icon icon-left btn-info" id="btn-reset">
+                  <i class="fas fa-sync-alt"></i> Reset Status
+                </button>
+              </form>
             </div>
           </div>
           <div class="card-body">
@@ -183,8 +189,6 @@
 
   <script src="{{ asset('assets/static/js/pages/simple-datatables.js') }}"></script>
   <script>
-    // Letakkan script ini di bawah HTML Anda
-
     document.getElementById('btn-print').addEventListener('click', function() {
       // Ambil elemen select
       const select = document.getElementById('nama_kelas');
@@ -209,6 +213,27 @@
         // Beri peringatan jika belum ada kelas yang dipilih
         alert('Silakan pilih kelas terlebih dahulu.');
       }
+    });
+
+    // Script untuk konfirmasi reset
+    document.getElementById('btn-reset').addEventListener('click', function(e) {
+      e.preventDefault(); // Mencegah aksi default
+
+      Swal.fire({
+        title: 'Anda Yakin?',
+        text: "Tindakan ini akan mereset status semua pemilih yang sudah memilih menjadi 'Belum Memilih'. Anda tidak bisa mengembalikan tindakan ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, reset semua!',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Jika pengguna menekan "Ya", kirim form-nya
+          document.getElementById('form-reset').submit();
+        }
+      });
     });
   </script>
   <script>

@@ -46,6 +46,9 @@ Route::middleware(['auth:admin'])->group(function () {
     // Route Export
     Route::get('/pemilih/export/{id}', [PemilihController::class, 'exportIndex'])->name('pemilih.export');
 
+    // Route Reset Pemilih
+    Route::post('/pemilih/reset-status', [PemilihController::class, 'resetStatus'])->name('pemilih.reset');
+
     // Route Config
     Route::get('/configs', [ConfigController::class, 'index'])->name('config.index');
     Route::post('/configs', [ConfigController::class, 'update'])->name('config.update');
