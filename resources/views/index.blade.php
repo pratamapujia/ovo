@@ -76,7 +76,7 @@
                   @php
                     $path = Storage::url('kandidat/' . $data->foto_kandidat);
                   @endphp
-                  <div class="col-sm-12 col-md-3 col-lg">
+                  <div class="col-sm-12 col-md-3 col-lg py-2">
                     <div class="card h-100">
                       <img src="{{ url($path) }}" class="card-img-top" alt="Foto {{ $data->nama_kandidat }}" style="height: 300px; object-fit: cover;">
                       <div class="card-body p-2">
@@ -110,13 +110,23 @@
                         <div class="modal-body">
                           <img src="{{ $path }}" class="d-flex img-fluid mx-auto rounded" alt="Foto Paslon" style="height: 200px">
                           <h4 class="modal-title my-2 text-center">{{ $data->nama_kandidat }}</h4>
-                          <div class="my-2">
-                            <h5 class="modal-title">Visi</h5>
-                            <p>{!! $data->visi !!}</p>
-                          </div>
-                          <div class="my-2">
-                            <h5 class="modal-title">Misi</h5>
-                            <p>{!! $data->misi !!}</p>
+                          <div class="row">
+                            <div class="col-12 col-lg-6 py-2">
+                              <div class="border border-sm rounded shadow-sm">
+                                <div class="m-2">
+                                  <h5 class="modal-title text-center">Visi</h5>
+                                  <p>{!! $data->visi !!}</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-lg-6 py-2">
+                              <div class="border border-sm rounded shadow-sm">
+                                <div class="m-2">
+                                  <h5 class="modal-title text-center">Misi</h5>
+                                  <p>{!! $data->misi !!}</p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div class="modal-footer">
@@ -139,11 +149,11 @@
           <div class="container">
             <div class="footer clearfix mb-0 text-muted">
               <div class="float-start">
-                <p>{{ Date('Y') }} &copy; Online Voting</p>
+                <p>{{ Date('Y') }} &copy;Online Voting</p>
               </div>
               <div class="float-end">
                 <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                  by <a href="https://github.com/shofwanhadif">Shofwan</a></p>
+                  by <a href="javascript:void(0)">PPA</a></p>
               </div>
             </div>
           </div>

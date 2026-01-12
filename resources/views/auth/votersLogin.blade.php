@@ -110,11 +110,15 @@
         </div>
 
         {{-- Modal Kandidat --}}
-        <div class="modal fade" id="modalKandidat" tabindex="-1" aria-labelledby="modalKandidatLabel" aria-hidden="true">
+        <div class="modal modal-borderless fade" id="modalKandidat" tabindex="-1" aria-labelledby="modalKandidatLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalKandidatLabel">📜 Para Calon Ketua dan Wakil OSIS 📜</h5>
+                @foreach ($config as $data)
+                  @if ($data->type == 0)
+                    <h5 class="modal-title" id="modalKandidatLabel">📜 {{ $data->value }} 📜</h5>
+                  @endif
+                @endforeach
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -149,11 +153,11 @@
           <div class="container">
             <div class="footer clearfix mb-0 text-muted">
               <div class="float-start">
-                <p>{{ Date('Y') }} &copy; Online Voting</p>
+                <p>{{ Date('Y') }} &copy;Online Voting</p>
               </div>
               <div class="float-end">
                 <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                  by <a href="https://github.com/shofwanhadif">Shofwan</a></p>
+                  by <a href="javascript:void(0)">PPA</a></p>
               </div>
             </div>
           </div>
