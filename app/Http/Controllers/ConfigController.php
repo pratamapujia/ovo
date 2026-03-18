@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Config;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ConfigController extends Controller
@@ -31,13 +32,13 @@ class ConfigController extends Controller
             'vote_open.date_format' => 'Format waktu tidak sesuai',
             'vote_closed.date_format' => 'Format waktu tidak sesuai',
             'app_logo.file' => 'Format file tidak sesuai',
-            'app_logo.image' => 'Format file tidak sesuai',
-            'app_logo.mimes' => 'Format file tidak sesuai',
-            'app_logo.max' => 'Ukuran file maksimal 2MB',
+            'app_logo.image' => 'File bukan gambar',
+            'app_logo.mimes' => 'Format logo harus jpg, jpeg, atau png',
+            'app_logo.max' => 'Ukuran gambar maksimal 2MB',
             'poster.file' => 'Format file tidak sesuai',
-            'poster.image' => 'Format file tidak sesuai',
-            'poster.mimes' => 'Format file tidak sesuai',
-            'poster.max' => 'Ukuran file maksimal 2MB',
+            'poster.image' => 'File bukan gambar',
+            'poster.mimes' => 'Format poster harus jpg, jpeg, atau png',
+            'poster.max' => 'Ukuran poster maksimal 2MB',
         ]);
 
         if ($validasi->fails()) {
