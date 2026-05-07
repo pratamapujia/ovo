@@ -22,7 +22,7 @@
         /* Base background yang lembut */
         background: #f8faff;
         position: relative;
-        overflow-x: hidden;
+        overflow: hidden;
         /* Mencegah scrollbar horizontal karena elemen background */
       }
 
@@ -76,16 +76,11 @@
 
       /* Navbar dengan efek kaca */
       .simple-navbar {
-        background: rgba(255, 255, 255, 0.7);
-        /* Lebih transparan */
-        backdrop-filter: blur(20px);
-        /* Efek blur kaca (frosted glass) */
         padding: 1rem 0;
         position: fixed;
         width: 100%;
         top: 0;
         z-index: 1000;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       }
 
       /* Container Utama */
@@ -193,13 +188,10 @@
 
       /* Footer */
       footer {
-        background: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(10px);
         padding: 1.5rem 0;
         text-align: center;
         font-size: 0.9rem;
         color: #6c757d;
-        border-top: 1px solid rgba(255, 255, 255, 0.3);
       }
 
       /* Responsive */
@@ -222,7 +214,6 @@
   </head>
 
   <body>
-
     <nav class="simple-navbar">
       <div class="container d-flex justify-content-between align-items-center">
         <div class="logo">
@@ -250,7 +241,7 @@
             <h2 class="fw-bolder text-dark mb-2">Selamat Datang! 👋</h2>
             @foreach ($config as $data)
               @if ($data->type == 0 && $data->value)
-                <p class="text-muted lead mb-0 fs-6">Silakan masuk untuk mulai memilih di <span class="text-primary fw-semibold">{{ $data->value }}</span></p>
+                <p class="text-muted lead mb-0 fs-6">Silakan masuk untuk mulai berpartisipasi dalam <span class="text-primary fw-semibold">{{ $data->value }}</span></p>
               @endif
             @endforeach
           </div>
@@ -301,7 +292,7 @@
 
           <div class="mt-5 text-center">
             <p class="small text-muted px-3">
-              <i class="bi bi-info-circle-fill me-1 text-primary"></i>
+              <i class="bi bi-info-circle-fill me-1 text-danger"></i>
               Gunakan NIS dan Token yang telah diberikan oleh panitia pemilihan.
             </p>
           </div>
