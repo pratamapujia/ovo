@@ -1,0 +1,185 @@
+body {
+  background-color: #f2f7ff;
+  font-family: 'Nunito', sans-serif;
+}
+
+/* Header Styling */
+.voting-header {
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Candidate Card Styling */
+/* Card Container */
+.candidate-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.candidate-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Wrapper */
+.candidate-img-wrapper {
+  position: relative;
+  padding: 15px;
+  background: linear-gradient(to bottom, rgba(13, 109, 253, 0.40), transparent);
+}
+
+.candidate-img-wrapper img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 5px solid #435EBE;
+  border-radius: 15px;
+}
+
+/* Badge di atas Foto */
+.card-badge {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  background: #435EBE;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Typography */
+.candidate-name {
+  font-weight: 700;
+  color: #2d3436;
+  letter-spacing: -0.5px;
+  font-size: 1.25rem;
+}
+
+/* Button Styling (Menyamakan dengan Modal) */
+.btn-detail-outline {
+  background: transparent;
+  color: #435EBE;
+  border: 2px solid rgba(13, 110, 253, 0.1);
+  border-radius: 12px;
+  padding: 10px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-detail-outline:hover {
+  background: rgba(13, 110, 253, 0.05);
+  border-color: #435EBE;
+}
+
+.btn-vote-primary {
+  background: #435EBE;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+  transition: all 0.3s;
+}
+
+.btn-vote-primary:hover {
+  background: #0b5ed7;
+  box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+  transform: scale(1.02);
+}
+
+/* Modal Styling */
+
+/* Container Foto dengan Gradasi Halus */
+.candidate-header {
+  background: linear-gradient(to bottom, rgba(13, 110, 253, 0.05), transparent);
+  border-radius: 15px;
+}
+
+/* Styling Foto agar Elegan */
+.img-candidate {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 4px solid #ffffff;
+}
+
+/* Badge Custom */
+.badge-elegant {
+  display: inline-block;
+  padding: 5px 15px;
+  background: #435EBE;
+  color: white;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Kotak Visi Misi yang Lebih Modern */
+.visi-misi-box {
+  background: #ffffff;
+  border: 1px solid #edf2f7;
+  border-radius: 15px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.visi-misi-box:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  border-color: #435EBE;
+}
+
+.visi-misi-title {
+  display: block;
+  font-weight: 700;
+  color: #435EBE;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid rgba(13, 110, 253, 0.1);
+  padding-bottom: 5px;
+}
+
+.content-text {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Responsive Fixes */
+@media (max-width: 576px) {
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .candidate-img-wrapper {
+    height: 320px;
+    /* Lebih tinggi di HP agar jelas */
+  }
+}

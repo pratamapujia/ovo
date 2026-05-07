@@ -53,7 +53,7 @@
                       </div>
                       <div class="user-img d-flex align-items-center">
                         <div class="avatar avatar-md">
-                          <img src="{{ asset('assets/static/images/faces/2.jpg') }}" />
+                          <img src="https://ui-avatars.com/api/?background=435EBE&color=fff&name={{ Auth::user()->name }}" />
                         </div>
                       </div>
                     </div>

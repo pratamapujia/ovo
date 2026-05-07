@@ -10,7 +10,6 @@
 
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <style>
       /* --- BACKGROUND MODERN & ELEGANT --- */
@@ -188,7 +187,7 @@
 
       /* Footer */
       footer {
-        padding: 1.5rem 0;
+        padding-bottom: 1rem;
         text-align: center;
         font-size: 0.9rem;
         color: #6c757d;
@@ -201,7 +200,7 @@
         }
 
         .login-left {
-          padding: 2.5rem 2rem;
+          padding: 2rem 1.5rem;
         }
 
         body::before,
@@ -237,7 +236,7 @@
     <div class="main-content" id="app">
       <div class="login-card row g-0">
         <div class="col-lg-6 login-left">
-          <div class="mb-5 text-center text-lg-start">
+          <div class="mb-3 mb-lg-4 text-center">
             <h2 class="fw-bolder text-dark mb-2">Selamat Datang! 👋</h2>
             @foreach ($config as $data)
               @if ($data->type == 0 && $data->value)
@@ -255,7 +254,7 @@
                 <div class="form-group has-icon-left">
                   <label class="form-label fw-bold text-primary">Nomor Induk Siswa</label>
                   <div class="position-relative">
-                    <input type="text" name="nis" class="form-control form-control-lg @error('nis') is-invalid @enderror" placeholder="Masukkan NIS Anda" value="{{ old('nis') }}">
+                    <input type="text" name="nis" class="form-control @error('nis') is-invalid @enderror" placeholder="Masukkan NIS Anda" value="{{ old('nis') }}">
                     <div class="form-control-icon">
                       <i class="bi bi-person-badge"></i>
                     </div>
@@ -270,7 +269,7 @@
                 <div class="form-group has-icon-left">
                   <label class="form-label fw-bold text-primary">Token Akses</label>
                   <div class="position-relative">
-                    <input type="text" name="password" class="form-control form-control-lg @error('password') is-invalid @enderror" placeholder="Masukkan Token Unik"
+                    <input type="text" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Masukkan Token Unik"
                       oninput="this.value = this.value.toUpperCase();" />
                     <div class="form-control-icon">
                       <i class="bi bi-shield-lock-fill"></i>
@@ -282,7 +281,7 @@
                 </div>
               </div>
 
-              <div class="col-12 mt-5">
+              <div class="col-12 mt-3">
                 <button type="submit" class="btn btn-login btn-primary w-100 text-white">
                   Masuk Sekarang <i class="bi bi-arrow-right-circle-fill ms-2"></i>
                 </button>
@@ -290,7 +289,7 @@
             </div>
           </form>
 
-          <div class="mt-5 text-center">
+          <div class="mt-3 text-center">
             <p class="small text-muted px-3">
               <i class="bi bi-info-circle-fill me-1 text-danger"></i>
               Gunakan NIS dan Token yang telah diberikan oleh panitia pemilihan.
@@ -300,7 +299,7 @@
 
         <div class="col-lg-6 login-right">
           <div class="text-center">
-            <img src="{{ asset('assets/static/images/bg/clip-voting2.gif') }}" alt="Voting Illustration" class="img-fluid rounded-3">
+            <img src="{{ asset('assets/static/images/gif/clip-voting2.gif') }}" alt="Voting Illustration" class="img-fluid rounded-3">
           </div>
         </div>
       </div>
@@ -313,7 +312,7 @@
             <div class="d-flex align-items-center">
               @foreach ($config as $data)
                 @if ($data->type == 0)
-                  <h5 class="modal-title fw-bold text-primary mb-0"><i class="bi bi-megaphone-fill me-2"></i>{{ $data->value }}</h5>
+                  <h5 class="modal-title fw-bold text-primary mb-0">📢 {{ $data->value }}</h5>
                 @endif
               @endforeach
             </div>
@@ -323,10 +322,10 @@
             <div class="row g-4 justify-content-center">
               @foreach ($config as $data)
                 @if ($data->type == 2 && $data->name == 'poster')
-                  <div class="col-md-8 col-lg-6">
-                    <div class="card border-0 shadow-sm h-100 overflow-hidden rounded-4">
+                  <div class="col-12 col-md-10">
+                    <div class="card border-0 shadow-sm overflow-hidden rounded-4">
                       @php $path = Storage::url('apps/' . $data->value); @endphp
-                      <img src="{{ url($path) }}" class="img-fluid w-100" alt="Poster Pengumuman" style="object-fit: cover">
+                      <img src="{{ url($path) }}" class="img-fluid" alt="Poster Pengumuman">
                     </div>
                   </div>
                 @endif
@@ -334,7 +333,7 @@
             </div>
           </div>
           <div class="modal-footer border-0">
-            <button type="button" class="btn btn-light-primary rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Mengerti & Tutup</button>
+            <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Mengerti & Tutup</button>
           </div>
         </div>
       </div>
@@ -375,7 +374,8 @@
 
       // Cek Modal
       $(document).ready(function() {
-        @if (isset($kandidat) && $kandidat->count() > 0)
+        // Modal Poster Kandidat
+        @if (isset($kandidat) && $kandidat->count() > 0 && !$errors->any())
           var myModal = new bootstrap.Modal(document.getElementById('modalKandidat'), {});
           myModal.show();
         @endif
