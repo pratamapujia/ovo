@@ -18,28 +18,21 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        /* Base background yang lembut */
         background: #f8faff;
         position: relative;
         overflow: hidden;
-        /* Mencegah scrollbar horizontal karena elemen background */
       }
 
-      /* Membuat elemen background "Aurora" yang bercahaya */
       body::before,
       body::after {
         content: '';
         position: absolute;
         z-index: -1;
-        /* Tempatkan di belakang konten */
         border-radius: 50%;
         filter: blur(120px);
-        /* Efek blur yang sangat kuat untuk kelembutan */
         opacity: 0.5;
-        /* Transparansi agar tidak terlalu mencolok */
       }
 
-      /* Cahaya di pojok kiri atas (Warna Biru/Ungu) */
       body::before {
         width: 700px;
         height: 700px;
@@ -49,7 +42,6 @@
         animation: floatBubble 20s infinite alternate ease-in-out;
       }
 
-      /* Cahaya di pojok kanan bawah (Warna Hangat/Kuning) */
       body::after {
         width: 600px;
         height: 600px;
@@ -59,7 +51,6 @@
         animation: floatBubble 15s infinite alternate-reverse ease-in-out;
       }
 
-      /* Animasi halus agar background terasa hidup */
       @keyframes floatBubble {
         0% {
           transform: translate(0, 0) scale(1);
@@ -70,10 +61,7 @@
         }
       }
 
-      /* --- END BACKGROUND --- */
-
-
-      /* Navbar dengan efek kaca */
+      /* Navbar & Main Content */
       .simple-navbar {
         padding: 1rem 0;
         position: fixed;
@@ -82,7 +70,6 @@
         z-index: 1000;
       }
 
-      /* Container Utama */
       .main-content {
         flex: 1;
         display: flex;
@@ -92,23 +79,18 @@
         padding-bottom: 60px;
       }
 
-      /* Kartu Login dengan efek Glassmorphism */
+      /* Login Card */
       .login-card {
-        /* Mengubah warna solid menjadi putih transparan */
         background: rgba(255, 255, 255, 0.85);
-        /* Menambahkan efek blur pada background di belakang kartu */
         backdrop-filter: blur(24px);
-        /* Border tipis semi-transparan untuk mempertegas tepi kaca */
         border: 1px solid rgba(255, 255, 255, 0.6);
         border-radius: 24px;
-        /* Shadow yang lebih lembut dan luas untuk kesan melayang */
         box-shadow: 0 20px 60px rgba(67, 94, 190, 0.1);
         overflow: hidden;
         width: 100%;
         max-width: 1000px;
         margin: 20px;
         z-index: 1;
-        /* Pastikan di atas elemen background */
       }
 
       .login-left {
@@ -119,7 +101,6 @@
       }
 
       .login-right {
-        /* Background sisi kanan dibuat sedikit lebih transparan agar menyatu */
         background: rgba(236, 242, 255, 0.5);
         display: flex;
         align-items: center;
@@ -128,7 +109,6 @@
         position: relative;
       }
 
-      /* Hiasan tambahan di sisi kanan */
       .login-right::before {
         content: '';
         position: absolute;
@@ -154,12 +134,12 @@
         transform: scale(1.03) translateY(-5px);
       }
 
+      /* Buttons */
       .btn-login {
         border-radius: 50px;
         padding: 0.9rem 2rem;
         font-weight: 700;
         font-size: 1rem;
-        /* Gradient yang lebih kaya */
         background: linear-gradient(135deg, #435ebe 0%, #2a4094 100%);
         border: none;
         box-shadow: 0 10px 20px rgba(67, 94, 190, 0.3);
@@ -172,7 +152,14 @@
         background: linear-gradient(135deg, #5672d8 0%, #3451b3 100%);
       }
 
-      /* Clock Badge Modern */
+      .btn-login:disabled {
+        background: #6c757d;
+        box-shadow: none;
+        transform: none;
+        cursor: not-allowed;
+      }
+
+      /* Clock Badge */
       .clock-badge {
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(10px);
@@ -206,7 +193,6 @@
         body::before,
         body::after {
           opacity: 0.3;
-          /* Kurangi intensitas background di HP */
         }
       }
     </style>
@@ -246,8 +232,9 @@
           </div>
 
           <div class="flash-data" data-gagal="{{ Session::get('error') }}"></div>
+          <div class="flash-data" data-success="{{ Session::get('success') }}"></div>
 
-          <form method="POST" action="{{ route('login.voters') }}">
+          <form method="POST" action="{{ route('login.voters') }}" id="loginForm">
             @csrf
             <div class="row gap-3">
               <div class="col-12">
@@ -282,18 +269,27 @@
               </div>
 
               <div class="col-12 mt-3">
-                <button type="submit" class="btn btn-login btn-primary w-100 text-white">
-                  Masuk Sekarang <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+                <button type="submit" id="btnSubmit" class="btn btn-login btn-primary w-100 text-white">
+                  <span id="btnText">Masuk Sekarang <i class="bi bi-arrow-right-circle-fill ms-2"></i></span>
+                  <span id="btnLoading" class="d-none">
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Memproses...
+                  </span>
                 </button>
               </div>
             </div>
           </form>
 
-          <div class="mt-3 text-center">
-            <p class="small text-muted px-3">
+          <div class="mt-4 text-center">
+            <p class="small text-muted px-3 mb-2">
               <i class="bi bi-info-circle-fill me-1 text-danger"></i>
               Gunakan NIS dan Token yang telah diberikan oleh panitia pemilihan.
             </p>
+            <!-- Penambahan Tombol Manual untuk Poster -->
+            @if (isset($kandidat) && $kandidat->count() > 0)
+              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-4 fw-bold mt-2" data-bs-toggle="modal" data-bs-target="#modalKandidat">
+                <i class="bi bi-image me-1"></i> Lihat Poster Kandidat
+              </button>
+            @endif
           </div>
         </div>
 
@@ -341,7 +337,7 @@
 
     <footer>
       <div class="container">
-        <p class="mb-0">{{ Date('Y') }} &copy; E-Voting System. Crafted with <i class="bi bi-heart-fill text-danger mx-1"></i> by PPA</p>
+        <p class="mb-0">{{ Date('Y') }} &copy; Online Voting. Crafted with <i class="bi bi-heart-fill text-danger mx-1"></i> by PPA</p>
       </div>
     </footer>
 
@@ -372,23 +368,37 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // Cek Modal
       $(document).ready(function() {
-        // Modal Poster Kandidat
-        @if (isset($kandidat) && $kandidat->count() > 0 && !$errors->any())
-          var myModal = new bootstrap.Modal(document.getElementById('modalKandidat'), {});
-          myModal.show();
-        @endif
+        // Efek loading form untuk mencegah double click/spam saat server lambat
+        $('#loginForm').on('submit', function() {
+          $('#btnSubmit').prop('disabled', true);
+          $('#btnText').addClass('d-none');
+          $('#btnLoading').removeClass('d-none');
+        });
 
         // Flash Data Error (SweetAlert)
-        const flashData = $('.flash-data').data('gagal');
-        if (flashData) {
+        const gagal = $('.flash-data').data('gagal');
+        const success = $('.flash-data').data('success');
+        if (gagal) {
           Swal.fire({
             icon: 'error',
             title: 'Akses Ditolak',
-            html: flashData,
+            html: gagal,
             confirmButtonColor: '#435ebe',
             confirmButtonText: 'Coba Lagi',
+            buttonsStyling: false,
+            customClass: {
+              confirmButton: 'btn btn-primary rounded-pill px-4'
+            }
+          });
+        }
+        if (success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            html: success,
+            confirmButtonColor: '#435ebe',
+            confirmButtonText: 'OK',
             buttonsStyling: false,
             customClass: {
               confirmButton: 'btn btn-primary rounded-pill px-4'

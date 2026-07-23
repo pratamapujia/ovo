@@ -159,7 +159,7 @@
 
       <footer class="mt-auto py-4 text-center text-muted small">
         <div class="container">
-          <p class="mb-1">&copy; {{ Date('Y') }} E-Voting System.</p>
+          <p class="mb-1">&copy; {{ Date('Y') }} Online Voting.</p>
           <p>Crafted with <i class="bi bi-heart-fill text-danger mx-1"></i> by PPA</p>
         </div>
       </footer>

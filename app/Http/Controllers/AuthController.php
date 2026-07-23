@@ -65,11 +65,20 @@ class AuthController extends Controller
         }
     }
 
-    public function logoutvoters()
+    public function logoutVoters(Request $request)
     {
-
+        // 1. Keluarkan pemilih dari sesi autentikasi guard 'pemilih'
         Auth::guard('pemilih')->logout();
-        return redirect('/');
+
+        // 2. Hancurkan/reset seluruh isi session saat ini
+        $request->session()->invalidate();
+
+        // 3. Buat ulang CSRF token untuk menghindari serangan pembajakan sesi
+        $request->session()->regenerateToken();
+
+        // 4. Arahkan kembali ke halaman awal atau form login
+        return redirect('/')->with('success', 'Anda telah berhasil memilih.');
+        // Sesuaikan url '/' dengan halaman login aplikasi Anda
     }
 
     public function indexAdmin()
