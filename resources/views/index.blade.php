@@ -23,23 +23,28 @@
       <header class="voting-header">
         <div class="container">
           <div class="header-content">
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center">
               @foreach ($config as $data)
                 @if ($data->type == 2 && $data->name == 'app_logo')
                   @php $path = Storage::url('apps/' . $data->value); @endphp
-                  <a href="{{ route('dashboard.voters') }}">
-                    <img src="{{ $path }}" alt="Logo" style="height: 50px;">
-                  </a>
+                  @if ($data->value == null)
+                    <a href="{{ route('dashboard.voters') }}">
+                      <img src="{{ asset('assets/static/images/logo/OVO.svg') }}" alt="Logo" style="height: 50px;">
+                    </a>
+                  @else
+                    <a href="{{ route('dashboard.voters') }}">
+                      <img src="{{ $path }}" alt="Logo" style="height: 50px;">
+                    </a>
+                  @endif
                 @endif
               @endforeach
-
-              <div>
-                @foreach ($config as $data)
-                  @if ($data->type == 0 && $data->value)
-                    <h4 class="m-0 fw-bold text-primary">{{ $data->value }}</h4>
-                  @endif
-                @endforeach
-              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              @foreach ($config as $data)
+                @if ($data->type == 0 && $data->value)
+                  <h4 class="m-0 fw-bold text-primary">{{ $data->value }}</h4>
+                @endif
+              @endforeach
             </div>
 
             <div class="user-info">
@@ -65,11 +70,21 @@
 
         <div class="row justify-content-center mb-4">
           <div class="col-lg-8">
-            <div class="alert alert-light-danger border-danger shadow-sm rounded-4 d-flex" role="alert">
-              <i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-3"></i>
+            <!-- Background menggunakan gradasi pastel biru (#eff4ff) ke pastel merah (#ffeded) -->
+            <div class="alert border-0 shadow-sm rounded-4 d-flex align-items-start p-4" role="alert" style="background: linear-gradient(0deg, #eff4ff 0%, #dad7ff 100%);">
+
+              <!-- Ikon dengan efek gradasi warna biru ke merah -->
+              <div class="me-3 mt-1">
+                <i class="bi bi-info-circle-fill"
+                  style="font-size: 1.8rem; background: -webkit-linear-gradient(135deg, #3b82f6, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+              </div>
+
+              <!-- Teks -->
               <div>
-                <h5 class="alert-heading fw-bold mb-1">Penting!</h5>
-                <p class="mb-0 text-muted">Gunakan hak pilih Anda dengan bijak. Pilihan tidak dapat diubah setelah tombol "Pilih" ditekan.</p>
+                <h6 class="fw-bold mb-1" style="color: #2d3748;">Halo, {{ Auth::user()->nama_pemilih }}! 👋</h6>
+                <p class="mb-0" style="color: #424242; font-size: 0.95rem; line-height: 1.6;">
+                  Silakan tentukan kandidat pilihanmu. Gunakan hak suara ini sesuai dengan hati nurani dan keyakinan pribadimu. Kerahasiaan pilihanmu terjamin!
+                </p>
               </div>
             </div>
           </div>
@@ -102,7 +117,7 @@
                         <form action="{{ route('voting.post') }}" method="POST" class="vote-form">
                           @csrf
                           <input type="hidden" name="kandidat_id" value="{{ $data->id }}">
-                          <button type="button" class="btn-vote-primary w-100 btn-vote" data-nama-kandidat="{{ $data->nama_kandidat }}">
+                          <button type="button" class="btn-vote-primary w-100 btn-vote" data-nama-kandidat="{{ $data->nama_kandidat }}" data-foto-kandidat="{{ url($path) }}">
                             <i class="bi bi-check-circle-fill me-1"></i> Vote
                           </button>
                         </form>
@@ -160,7 +175,7 @@
       <footer class="mt-auto py-4 text-center text-muted small">
         <div class="container">
           <p class="mb-1">&copy; {{ Date('Y') }} Online Voting.</p>
-          <p>Crafted with <i class="bi bi-heart-fill text-danger mx-1"></i> by PPA</p>
+          <p>Crafted with <i class="bi bi-heart-fill text-danger mx-1"></i> by <span class="text-primary">PPA</span> </p>
         </div>
       </footer>
     </div>
@@ -175,25 +190,55 @@
         button.addEventListener('click', function() {
           const form = this.closest('.vote-form');
           const candidateName = this.dataset.namaKandidat;
+          const candidatePhoto = this.dataset.fotoKandidat; // Mengambil URL foto
 
           Swal.fire({
             title: 'Konfirmasi Pilihan',
-            html: `Apakah Anda yakin memilih <b>${candidateName}</b>?<br><small class="text-danger">Pilihan tidak dapat diubah.</small>`,
-            icon: 'warning',
+            icon: 'question',
+            html: `
+              <div class="mt-3">
+                <p class="mb-3 text-secondary">Anda akan memberikan suara untuk:</p>
+                
+                <!-- Menampilkan Foto Kandidat -->
+                <div class="mb-3 position-relative d-inline-block">
+                  <img src="${candidatePhoto}" alt="Foto ${candidateName}" class="rounded-circle shadow" style="width: 120px; height: 120px; object-fit: cover; border: 4px solid #fff;">
+                </div>
+                
+                <h3 class="text-primary fw-bold mb-4">${candidateName}</h3>
+                
+                <!-- Kotak Peringatan -->
+                <div class="bg-light-warning border border-warning rounded-3 p-3 text-start">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-exclamation-triangle-fill text-warning fs-3 me-3"></i>
+                    <p class="mb-0 text-dark small" style="line-height: 1.4;">
+                      <strong>Perhatian:</strong> Pilihan yang sudah dikirim bersifat final dan <b>tidak dapat diubah kembali</b>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            `,
             showCancelButton: true,
-            confirmButtonColor: '#435ebe',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Saya Yakin!',
-            cancelButtonText: 'Batal',
             reverseButtons: true,
-            focusConfirm: false
+            focusConfirm: false,
+            buttonsStyling: false,
+            confirmButtonText: '<i class="bi bi-check2-circle me-1"></i> Ya, Saya Yakin',
+            cancelButtonText: '<i class="bi bi-x-circle me-1"></i> Batal',
+            customClass: {
+              popup: 'rounded-4 shadow-lg border-0',
+              title: 'fw-bold text-dark pt-3',
+              confirmButton: 'btn btn-primary rounded-pill px-4 py-2 mx-2 fw-bold shadow-sm',
+              cancelButton: 'btn btn-light rounded-pill px-4 py-2 mx-2 fw-bold text-secondary border'
+            }
           }).then((result) => {
             if (result.isConfirmed) {
-              // Efek loading saat submit
               Swal.fire({
-                title: 'Memproses...',
-                text: 'Mohon tunggu sebentar',
+                title: 'Memproses Suara...',
+                html: '<span class="text-muted small">Mohon tunggu, suara Anda sedang diamankan.</span>',
                 allowOutsideClick: false,
+                showConfirmButton: false,
+                customClass: {
+                  popup: 'rounded-4'
+                },
                 didOpen: () => {
                   Swal.showLoading();
                 }
@@ -208,15 +253,33 @@
     @if (session('success'))
       <script>
         Swal.fire({
-          title: 'Berhasil!',
-          text: '{{ session('success') }}',
           icon: 'success',
+          title: 'Suara Berhasil Masuk!',
+          html: '<p class="text-secondary mb-0">{{ session('success') }}</p><p class="small text-muted mt-3">Mengarahkan Anda keluar dari sistem...</p>',
           allowOutsideClick: false,
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#435ebe',
-          timer: 5000,
+          showConfirmButton: true,
+          confirmButtonText: '<i class="bi bi-check2-circle me-1"></i> Selesai',
+          timer: 3500,
           timerProgressBar: true,
+          buttonsStyling: false,
+          customClass: {
+            popup: 'rounded-4 shadow-lg border-0',
+            title: 'fw-bold text-dark pt-3',
+            confirmButton: 'btn btn-primary rounded-pill px-5 py-2 fw-bold shadow-sm'
+          }
         }).then(() => {
+          // Transisi halus saat logout diproses
+          Swal.fire({
+            title: 'Keluar Sistem...',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            customClass: {
+              popup: 'rounded-4'
+            },
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          });
           window.location.href = "{{ route('logoutvoters') }}";
         });
       </script>

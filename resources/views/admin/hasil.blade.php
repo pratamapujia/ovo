@@ -2,7 +2,30 @@
 @section('title')
   <title>Hasil Pemilu</title>
 @endsection
+
 @section('content')
+  @php
+    use Carbon\Carbon;
+
+    // Mengambil konfigurasi batas waktu dari database
+    $voteDate = \App\Models\Config::where('name', 'vote_date')->value('value');
+    $voteClosed = \App\Models\Config::where('name', 'vote_closed')->value('value');
+    $appName = \App\Models\Config::where('name', 'app_name')->value('value') ?? 'Pemilu';
+
+    $isClosed = false;
+    $tutupTanggalStr = '';
+
+    if ($voteDate && $voteClosed) {
+        $endDateTime = Carbon::parse($voteDate . ' ' . $voteClosed);
+        // Cek apakah waktu saat ini (sekarang) sudah melewati batas waktu tutup
+        if (Carbon::now()->gt($endDateTime)) {
+            $isClosed = true;
+        }
+        // Format tanggal untuk ditampilkan di alert
+        $tutupTanggalStr = $endDateTime->translatedFormat('d F Y, H:i');
+    }
+  @endphp
+
   <div id="main-content">
     <div class="page-heading">
       <div class="page-title">
@@ -12,80 +35,157 @@
           </div>
         </div>
       </div>
-      <section class="section">
+
+      <section class="section mt-3">
         <div class="row">
           <div class="col-12">
-            {{-- Cek apakah variabel $chartData tidak kosong --}}
-            @if (!empty($chartData) && count($chartData) > 0)
-              <div class="card">
-                <div class="card-body">
-                  <div id="chart-hasil"></div>
+
+            {{-- LOGIKA 1: JIKA PEMILIHAN BELUM SELESAI --}}
+            @if (!$isClosed)
+              <div class="alert border-0 shadow-sm rounded-4 d-flex align-items-center p-4" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
+                <div class="me-4 d-none d-sm-block">
+                  <div class="bg-info bg-opacity-25 p-3 rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-clock-history text-info" style="font-size: 2.5rem;"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="fw-bold text-dark mb-1">Pemilihan Sedang Berlangsung! ⏳</h4>
+                  <p class="mb-0 text-secondary" style="font-size: 1.05rem;">
+                    Grafik hasil suara saat ini disembunyikan untuk menjaga objektivitas pemilih. <br>
+                    Hasil akhir akan ditampilkan secara otomatis setelah batas waktu pemilihan berakhir pada <strong>{{ $tutupTanggalStr }}</strong>.
+                  </p>
                 </div>
               </div>
+
+              {{-- LOGIKA 2: JIKA PEMILIHAN SUDAH SELESAI --}}
             @else
-              {{-- Jika data kosong, tampilkan alert ini --}}
-              <div class="alert alert-warning" role="alert">
-                <h4 class="alert-heading">Data Kosong!</h4>
-                <p>Saat ini belum ada data hasil pemilu yang dapat ditampilkan.</p>
-              </div>
+              {{-- Cek apakah variabel $chartData tidak kosong --}}
+              @if (!empty($chartData) && count($chartData) > 0)
+                <div class="card shadow-sm rounded-4">
+                  <div class="card-body p-4">
+                    <div id="chart-hasil"></div>
+                  </div>
+                </div>
+              @else
+                {{-- Jika data kosong --}}
+                <div class="alert alert-warning border-warning shadow-sm rounded-4 d-flex align-items-center p-4" role="alert">
+                  <i class="bi bi-exclamation-triangle-fill text-warning fs-1 me-4"></i>
+                  <div>
+                    <h4 class="alert-heading text-dark fw-bold mb-1">Data Kosong!</h4>
+                    <p class="mb-0 text-secondary">Saat ini belum ada data hasil pemilu yang dapat ditampilkan.</p>
+                  </div>
+                </div>
+              @endif
             @endif
+
           </div>
         </div>
       </section>
     </div>
   </div>
 @endsection
-{{-- Script hanya akan di-load jika data chart tersedia --}}
-@if (!empty($chartData) && count($chartData) > 0)
+
+{{-- Script hanya akan di-load jika pemilihan SUDAH SELESAI dan data chart TERSEDIA --}}
+@if (isset($isClosed) && $isClosed && !empty($chartData) && count($chartData) > 0)
   @section('script')
     <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script>
+      const judulPemilihan = "Hasil Akhir: {{ $appName }}";
       const hasilData = @json($chartData);
 
-      // Ambil data kandidat dan suara
+      // Ambil data suara dan label
       const suaraData = hasilData.map(item => item.total_suara);
       const labelData = hasilData.map(item => item.nama_kandidat);
 
+      // Hitung total suara dan persentase
+      const totalSuara = suaraData.reduce((total, suara) => total + suara, 0);
+      const persentaseData = suaraData.map(suara => {
+        return totalSuara > 0 ? parseFloat(((suara / totalSuara) * 100).toFixed(1)) : 0;
+      });
+
       let optionsVisitorsProfile = {
-        series: suaraData,
-        labels: labelData,
+        series: [{
+          name: 'Perolehan Suara',
+          data: persentaseData
+        }],
         chart: {
-          type: "polarArea",
+          type: "bar",
           width: "100%",
-          height: "400px",
+          height: "450px",
           toolbar: {
-            show: true,
+            show: true
           },
         },
-        fill: {
-          opacity: 1
-        },
-        stroke: {
-          width: 1,
-          colors: undefined
-        },
-        yaxis: {
-          show: false
+        title: {
+          text: judulPemilihan,
+          align: 'center',
+          margin: 30,
+          style: {
+            fontSize: '20px',
+            fontWeight: 'bold',
+            color: '#2d3748'
+          }
         },
         plotOptions: {
-          polarArea: {
-            rings: {
-              strokeWidth: 0
-            },
-            spokes: {
-              strokeWidth: 0
-            },
+          bar: {
+            borderRadius: 6,
+            horizontal: false,
+            columnWidth: '55%',
+            distributed: true,
+            dataLabels: {
+              position: 'top'
+            }
           }
         },
         dataLabels: {
           enabled: true,
+          offsetY: -25,
+          formatter: function(val) {
+            return val + "%";
+          },
           style: {
-            fontSize: '24px',
+            fontSize: '15px',
+            colors: ["#304758"]
           }
         },
-        legend: {
-          position: "top",
+        xaxis: {
+          categories: labelData,
+          position: 'bottom',
+          labels: {
+            style: {
+              fontSize: '14px',
+              fontWeight: 'bold',
+            }
+          },
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
+          }
         },
+        yaxis: {
+          title: {
+            text: 'Persentase Suara (%)',
+            style: {
+              fontWeight: 'bold'
+            }
+          },
+          max: 100
+        },
+        colors: ['#435ebe', '#ff7976', '#57ca22', '#ffc107', '#55c6e8', '#9543be'],
+        legend: {
+          show: false
+        },
+        tooltip: {
+          y: {
+            formatter: function(val, opts) {
+              const index = opts.dataPointIndex;
+              const suaraAsli = suaraData[index];
+              return val + "%";
+            }
+          }
+        }
       }
 
       const chart = new ApexCharts(document.querySelector("#chart-hasil"), optionsVisitorsProfile);

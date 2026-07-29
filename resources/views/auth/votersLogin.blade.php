@@ -243,8 +243,7 @@
             @endforeach
           </div>
 
-          <div class="flash-data" data-gagal="{{ Session::get('error') }}"></div>
-          <div class="flash-data" data-success="{{ Session::get('success') }}"></div>
+          <div class="flash-data" data-gagal="{{ Session::get('error') }}" data-success="{{ Session::get('success') }}"></div>
 
           <form method="POST" action="{{ route('login.voters') }}" id="loginForm">
             @csrf
@@ -406,14 +405,16 @@
         }
         if (success) {
           Swal.fire({
+            toast: true,
+            position: 'top',
             icon: 'success',
-            title: 'Berhasil',
-            html: success,
-            confirmButtonColor: '#435ebe',
-            confirmButtonText: 'OK',
-            buttonsStyling: false,
-            customClass: {
-              confirmButton: 'btn btn-primary rounded-pill px-4'
+            title: success,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           });
         }
