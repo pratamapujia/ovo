@@ -9,20 +9,30 @@
 
     // Mengambil konfigurasi batas waktu dari database
     $voteDate = \App\Models\Config::where('name', 'vote_date')->value('value');
+    $voteOpen = \App\Models\Config::where('name', 'vote_open')->value('value');
     $voteClosed = \App\Models\Config::where('name', 'vote_closed')->value('value');
     $appName = \App\Models\Config::where('name', 'app_name')->value('value') ?? 'Pemilu';
 
-    $isClosed = false;
+    $statusPemilihan = 'sudah_selesai'; // Nilai awal (fallback)
+    $bukaTanggalStr = '';
     $tutupTanggalStr = '';
 
-    if ($voteDate && $voteClosed) {
+    if ($voteDate && $voteOpen && $voteClosed) {
+        $startDateTime = Carbon::parse($voteDate . ' ' . $voteOpen);
         $endDateTime = Carbon::parse($voteDate . ' ' . $voteClosed);
-        // Cek apakah waktu saat ini (sekarang) sudah melewati batas waktu tutup
-        if (Carbon::now()->gt($endDateTime)) {
-            $isClosed = true;
-        }
-        // Format tanggal untuk ditampilkan di alert
+        $now = Carbon::now();
+
+        $bukaTanggalStr = $startDateTime->translatedFormat('d F Y, H:i');
         $tutupTanggalStr = $endDateTime->translatedFormat('d F Y, H:i');
+
+        // Pengecekan 3 Kondisi Waktu
+        if ($now->lt($startDateTime)) {
+            $statusPemilihan = 'belum_dimulai';
+        } elseif ($now->gt($endDateTime)) {
+            $statusPemilihan = 'sudah_selesai';
+        } else {
+            $statusPemilihan = 'sedang_berlangsung';
+        }
     }
   @endphp
 
@@ -40,8 +50,25 @@
         <div class="row">
           <div class="col-12">
 
-            {{-- LOGIKA 1: JIKA PEMILIHAN BELUM SELESAI --}}
-            @if (!$isClosed)
+            {{-- KONDISI 1: JIKA PEMILIHAN BELUM DIMULAI --}}
+            @if ($statusPemilihan == 'belum_dimulai')
+              <div class="alert border-0 shadow-sm rounded-4 d-flex align-items-center p-4" style="background: linear-gradient(135deg, #fdf4ff 0%, #f3e8ff 100%);">
+                <div class="me-4 d-none d-sm-block">
+                  <div class="p-3 rounded-circle d-flex align-items-center justify-content-center" style="background-color: rgba(149, 67, 190, 0.15);">
+                    <i class="bi bi-calendar-event" style="font-size: 2.5rem; color: #9543be;"></i>
+                  </div>
+                </div>
+                <div>
+                  <h4 class="fw-bold text-dark mb-1">Pemilihan Belum Dimulai! 📅</h4>
+                  <p class="mb-0 text-secondary" style="font-size: 1.05rem;">
+                    Sistem pemungutan suara saat ini belum dibuka. <br>
+                    Pemilihan akan dimulai secara otomatis pada <strong>{{ $bukaTanggalStr }}</strong>.
+                  </p>
+                </div>
+              </div>
+
+              {{-- KONDISI 2: JIKA PEMILIHAN SEDANG BERLANGSUNG --}}
+            @elseif ($statusPemilihan == 'sedang_berlangsung')
               <div class="alert border-0 shadow-sm rounded-4 d-flex align-items-center p-4" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);">
                 <div class="me-4 d-none d-sm-block">
                   <div class="bg-info bg-opacity-25 p-3 rounded-circle d-flex align-items-center justify-content-center">
@@ -57,7 +84,7 @@
                 </div>
               </div>
 
-              {{-- LOGIKA 2: JIKA PEMILIHAN SUDAH SELESAI --}}
+              {{-- KONDISI 3: JIKA PEMILIHAN SUDAH SELESAI --}}
             @else
               {{-- Cek apakah variabel $chartData tidak kosong --}}
               @if (!empty($chartData) && count($chartData) > 0)
@@ -86,7 +113,7 @@
 @endsection
 
 {{-- Script hanya akan di-load jika pemilihan SUDAH SELESAI dan data chart TERSEDIA --}}
-@if (isset($isClosed) && $isClosed && !empty($chartData) && count($chartData) > 0)
+@if (isset($statusPemilihan) && $statusPemilihan == 'sudah_selesai' && !empty($chartData) && count($chartData) > 0)
   @section('script')
     <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script>
