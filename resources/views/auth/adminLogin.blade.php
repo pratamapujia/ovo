@@ -217,7 +217,7 @@
       <div class="container d-flex justify-content-between align-items-center">
         <div class="logo">
           <a href="/">
-            <img src="{{ asset('assets/static/images/logo/icon2.svg') }}" alt="Logo" style="height: 45px">
+            <img src="{{ asset('assets/static/images/logo/icon2.svg') }}" alt="Logo" style="height: 64px">
           </a>
         </div>
         <div class="clock-wrapper">

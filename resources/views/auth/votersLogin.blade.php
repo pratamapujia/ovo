@@ -165,11 +165,17 @@
         backdrop-filter: blur(10px);
         color: #435ebe;
         font-weight: 700;
-        padding: 8px 18px;
         border-radius: 50px;
         border: 1px solid rgba(205, 220, 252, 0.5);
         font-family: 'Courier New', monospace;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        display: inline-block;
+
+        /* Ukuran font responsif: min 12px, membesar dinamis, max 16px */
+        font-size: clamp(12px, 1.5vw, 16px);
+
+        /* Padding responsif: min 4px 12px, max 8px 18px */
+        padding: clamp(4px, 1vw, 8px) clamp(12px, 2vw, 18px);
       }
 
       /* Footer */
@@ -205,9 +211,15 @@
           @foreach ($config as $data)
             @if ($data->type == 2 && $data->name == 'app_logo')
               @php $path = Storage::url('apps/' . $data->value); @endphp
-              <a href="/">
-                <img src="{{ $path }}" alt="Logo" style="height: 45px">
-              </a>
+              @if ($data->value == null)
+                <a href="/">
+                  <img src="{{ asset('assets/static/images/logo/icon2.svg') }}" alt="Logo" style="height: 64px">
+                </a>
+              @else
+                <a href="/">
+                  <img src="{{ $path }}" alt="Logo" style="height: 64px">
+                </a>
+              @endif
             @endif
           @endforeach
         </div>
@@ -358,9 +370,9 @@
         };
         const formattedTime = now.toLocaleTimeString('id-ID', options);
         const dateStr = now.toLocaleDateString('id-ID', {
-          weekday: 'short',
+          weekday: 'long',
           day: 'numeric',
-          month: 'short'
+          month: 'long'
         });
 
         document.getElementById('clock').innerHTML = `<span class="small fw-normal text-primary me-1">${dateStr}</span> ${formattedTime}`;
