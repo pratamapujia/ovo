@@ -128,24 +128,47 @@
   <div class="modal fade text-left" id="importModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="myModalLabelModalLabel">Import Excel</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+        <div class="modal-header bg-success">
+          <h5 class="modal-title text-white" id="myModalLabelModalLabel">
+            <i class="fas fa-file-import me-2"></i> Import Excel Pemilih
+          </h5>
+          <button type="button" class="close text-white" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <form action="{{ route('pemilih.import') }}" method="POST" enctype="multipart/form-data">
           @csrf
           <div class="modal-body">
+
+            {{-- Bagian Penjelasan Petunjuk Pengisian --}}
+            <div class="alert alert-light-info color-info border-info mb-4" role="alert">
+              <h6 class="alert-heading fw-bold mb-2"><i class="fas fa-info-circle"></i> Petunjuk Pengisian Data:</h6>
+              <p class="mb-2" style="font-size: 0.9rem;">Pastikan baris pertama (header) file Excel Anda persis seperti format berikut:</p>
+              <ul style="font-size: 0.9rem;" class="mb-3">
+                <li><strong>nis</strong> : Wajib diisi dengan angka dan tidak boleh duplikat (belum terdaftar di database).</li>
+                <li><strong>nama_pemilih</strong> : Wajib diisi dengan nama pemilih.</li>
+                <li><strong>nama_kelas</strong> : Wajib diisi. Pastikan penulisan nama kelas persis dengan data Kelas yang sudah ditambahkan di sistem.</li>
+              </ul>
+              <div class="bg-light p-2 rounded border border-warning">
+                <p class="text-warning mb-0" style="font-size: 0.8rem;">
+                  <i class="fas fa-exclamation-triangle"></i> <b>Catatan:</b> Anda tidak perlu membuat kolom untuk Token, Password, dan Status. Sistem akan mengenerate data tersebut secara otomatis.
+                </p>
+              </div>
+            </div>
+            {{-- End Penjelasan --}}
+
             <div class="form-group">
-              <label for="excel">Pilih File Excel</label>
-              <input type="file" class="form-control" name="input_excel" required>
+              <label for="excel" class="fw-bold">Pilih File Excel (.xls, .xlsx)</label>
+              <!-- Menambahkan atribut accept agar hanya file excel yang bisa dipilih -->
+              <input type="file" class="form-control mt-2" name="input_excel" accept=".xls, .xlsx" required>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn icon icon-left btn-success" onclick="downloadTemplate()"> <i class="fas fa-file-download"></i> Unduh Template</button>
-            <button type="submit" class="btn btn-primary">Import</button>
+            <button type="button" class="btn icon icon-left btn-success" onclick="downloadTemplate()">
+              <i class="fas fa-file-download"></i> Unduh Template
+            </button>
+            <button type="submit" class="btn btn-primary">Import Data</button>
           </div>
         </form>
       </div>
