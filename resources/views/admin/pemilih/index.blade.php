@@ -136,7 +136,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{{ route('pemilih.import') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('pemilih.import') }}" method="POST" enctype="multipart/form-data" id="formImport">
           @csrf
           <div class="modal-body">
 
