@@ -136,6 +136,10 @@ class PemilihController extends Controller
 
     public function import(Request $request)
     {
+        // --- TINGKATKAN LIMIT PHP SEMENTARA ---
+        ini_set('max_execution_time', 300); // Batas eksekusi menjadi 300 detik (5 Menit)
+        ini_set('memory_limit', '512M');    // Batas RAM dinaikkan menjadi 512 MB
+
         // 1. Validasi file yang diupload
         $request->validate([
             'input_excel' => 'required|mimes:xls,xlsx'
