@@ -5,7 +5,7 @@ namespace App\Imports;
 use App\Models\Kelas;
 use App\Models\Pemilih;
 use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
+// use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

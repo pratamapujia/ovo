@@ -42,6 +42,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
     // Route Import
     Route::post('/pemilih/import', [PemilihController::class, 'import'])->name('pemilih.import');
+    Route::post('/kelas/import', [KelasController::class, 'import'])->name('kelas.import');
 
     // Route Export
     Route::get('/pemilih/export/{id}', [PemilihController::class, 'exportIndex'])->name('pemilih.export');

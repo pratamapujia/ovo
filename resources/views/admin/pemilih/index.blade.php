@@ -258,8 +258,31 @@
         }
       });
     });
-  </script>
-  <script>
+
+    // Script untuk menampilkan SweetAlert Loading saat mengimpor data
+    document.getElementById('formImport').addEventListener('submit', function() {
+      // Menutup modal import agar tidak menumpuk dengan loading
+      var importModal = bootstrap.Modal.getInstance(document.getElementById('importModal'));
+      if (importModal) {
+        importModal.hide();
+      }
+
+      // Menampilkan SweetAlert Loading
+      Swal.fire({
+        title: 'Mengimpor Data...',
+        html: '<span class="text-muted small">Mohon tunggu sebentar, sistem sedang memproses dan menyimpan data Anda.</span>',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        customClass: {
+          popup: 'rounded-4'
+        },
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+    });
+
+    // Script untuk mengunduh template Excel
     function downloadTemplate() {
       window.location.href = "/download-template";
     }
