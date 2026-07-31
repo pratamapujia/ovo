@@ -7,12 +7,12 @@ use App\Models\Pemilih;
 use App\Imports\VotersImport;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
-use PDF;
+// use PDF;
 
 class PemilihController extends Controller
 {
@@ -137,7 +137,7 @@ class PemilihController extends Controller
     public function import(Request $request)
     {
         // --- TINGKATKAN LIMIT PHP SEMENTARA ---
-        ini_set('max_execution_time', 300); // Batas eksekusi menjadi 300 detik (5 Menit)
+        ini_set('max_execution_time', 900); // Batas eksekusi menjadi 900 detik (15 menit)
         ini_set('memory_limit', '512M');    // Batas RAM dinaikkan menjadi 512 MB
 
         // 1. Validasi file yang diupload
