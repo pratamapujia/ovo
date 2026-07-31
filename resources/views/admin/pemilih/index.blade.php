@@ -149,7 +149,7 @@
                 <li><strong>nama_pemilih</strong> : Wajib diisi dengan nama pemilih.</li>
                 <li><strong>nama_kelas</strong> : Wajib diisi. Pastikan penulisan nama kelas persis dengan data Kelas yang sudah ditambahkan di sistem.</li>
               </ul>
-              <div class="bg-light p-2 rounded border border-warning">
+              <div class="bg-light-warning p-2 rounded border border-warning">
                 <p class="text-warning mb-0" style="font-size: 0.8rem;">
                   <i class="fas fa-exclamation-triangle"></i> <b>Catatan:</b> Anda tidak perlu membuat kolom untuk Token, Password, dan Status. Sistem akan mengenerate data tersebut secara otomatis.
                 </p>
