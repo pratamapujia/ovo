@@ -23,7 +23,7 @@ class ConfigController extends Controller
             'vote_open' => 'nullable|date_format:H:i',
             'vote_closed' => 'nullable|date_format:H:i',
             'app_logo' => 'nullable|file|image|mimes:jpg,jpeg,png|max:2048',
-            'poster' => 'nullable|file|image|mimes:jpg,jpeg,png',
+            'poster' => 'nullable|file|image|mimes:jpg,jpeg,png|max:5120',
         ], [
             'app_name.required' => 'Nama aplikasi wajib diisi',
             'app_name.string' => 'Nama aplikasi harus berupa string',
@@ -38,6 +38,7 @@ class ConfigController extends Controller
             'poster.file' => 'Format file tidak sesuai',
             'poster.image' => 'File bukan gambar',
             'poster.mimes' => 'Format poster harus jpg, jpeg, atau png',
+            'poster.max' => 'Ukuran gambar maksimal 5MB',
         ]);
 
         if ($validasi->fails()) {

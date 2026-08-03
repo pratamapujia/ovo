@@ -129,40 +129,48 @@
             </div>
 
             {{-- Modal Detail --}}
-            <div class="modal fade" id="detail{{ $data->id }}" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-                <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
-                  <div class="modal-header border-0 pb-0">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body pt-0 px-4 pb-4">
-                    <!-- BAGIAN YANG DIUBAH: Header Kandidat -->
-                    <div class="candidate-header text-center mb-4 p-4">
-                      <div class="position-relative d-inline-block mb-3">
-                        <img src="{{ $path }}" class="img-candidate shadow" alt="Foto Paslon">
-                      </div>
-                      <h3 class="fw-bold text-dark mb-1">{{ $data->nama_kandidat }}</h3>
-                      <span class="badge-elegant">Kandidat Utama</span>
-                    </div>
+            <div class="row g-4">
+              <!-- Visi (Style Quotes & Centered) -->
+              <div class="col-12">
+                <div class="position-relative p-4 rounded-4 text-center shadow-sm" style="background: linear-gradient(to right, #f4f7ff, #ffffff, #f4f7ff); border: 1px solid #e0e7ff;">
 
-                    <div class="row g-3">
-                      <div class="col-md-6">
-                        <div class="visi-misi-box h-100">
-                          <span class="visi-misi-title"><i class="bi bi-lightbulb-fill me-2"></i>Visi</span>
-                          <div class="content-text">
-                            {!! $data->visi !!}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="visi-misi-box h-100">
-                          <span class="visi-misi-title"><i class="bi bi-list-check me-2"></i>Misi</span>
-                          <div class="content-text">
-                            {!! $data->misi !!}
-                          </div>
-                        </div>
-                      </div>
+                  <!-- Ikon Quote Kiri Atas -->
+                  <i class="bi bi-quote position-absolute text-primary" style="font-size: 5rem; top: -20px; left: 10px; opacity: 0.1;"></i>
+
+                  <!-- Label Visi -->
+                  <div class="mb-3">
+                    <span class="badge bg-primary rounded-pill px-4 py-2 fs-6 shadow-sm">
+                      <i class="bi bi-lightbulb-fill me-1"></i> Visi
+                    </span>
+                  </div>
+
+                  <!-- Konten Visi -->
+                  <blockquote class="blockquote mb-0 px-md-5 position-relative z-1">
+                    <div class="fs-5 fst-italic text-dark fw-medium" style="line-height: 1.8;">
+                      {!! $data->visi !!}
                     </div>
+                  </blockquote>
+
+                  <!-- Ikon Quote Kanan Bawah -->
+                  <i class="bi bi-quote position-absolute text-primary" style="font-size: 5rem; bottom: -35px; right: 10px; opacity: 0.1; transform: rotate(180deg);"></i>
+                </div>
+              </div>
+
+              <!-- Misi -->
+              <div class="col-12">
+                <div class="visi-misi-box h-100 p-4 rounded-4 shadow-sm" style="background-color: #fafbfc; border: 1px solid #e0e7ff;">
+
+                  <!-- Label Misi -->
+                  <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+                    <span class="badge bg-danger rounded-pill px-4 py-2 fs-6 shadow-sm me-3">
+                      <i class="bi bi-list-check me-1"></i> Misi
+                    </span>
+                    <span class="text-muted fw-semibold">Program Kerja & Langkah Konkret</span>
+                  </div>
+
+                  <!-- Konten Misi -->
+                  <div class="content-text text-secondary" style="line-height: 1.7;">
+                    {!! $data->misi !!}
                   </div>
                 </div>
               </div>
