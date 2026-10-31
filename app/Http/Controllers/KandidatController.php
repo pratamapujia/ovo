@@ -148,6 +148,10 @@ class KandidatController extends Controller
     {
         $kandidat = Kandidat::find($id);
         if ($kandidat->delete()) {
+            // Hapus foto kandidat jika ada
+            if ($kandidat->foto_kandidat) {
+                Storage::delete('public/kandidat/' . $kandidat->foto_kandidat);
+            }
             return redirect()->route('kandidat.index')->with('pesan', 'Data berhasil dihapus 👍');
         } else {
             return redirect()->route('kandidat.index')->with('gagal', 'Data gagal dihapus 😭');

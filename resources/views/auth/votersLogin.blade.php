@@ -243,7 +243,7 @@
             @endforeach
           </div>
 
-          <div class="flash-data" data-gagal="{{ Session::get('error') }}" data-success="{{ Session::get('success') }}"></div>
+          <div class="flash-data" data-gagal="{{ Session::get('error') }}" data-success="{{ Session::get('success') }}" data-voted="{{ Session::get('voted') }}"></div>
 
           <form method="POST" action="{{ route('login.voters') }}" id="loginForm">
             @csrf
@@ -281,7 +281,7 @@
 
               <div class="col-12 mt-3">
                 <button type="submit" id="btnSubmit" class="btn btn-login btn-primary w-100 text-white">
-                  <span id="btnText">Masuk Sekarang <i class="bi bi-arrow-right-circle-fill ms-2"></i></span>
+                  <span id="btnText">Masuk Sekarang</i></span>
                   <span id="btnLoading" class="d-none">
                     <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Memproses...
                   </span>
@@ -297,8 +297,14 @@
             </p>
             <!-- Penambahan Tombol Manual untuk Poster -->
             @if (isset($kandidat) && $kandidat->count() > 0)
-              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-4 fw-bold mt-2" data-bs-toggle="modal" data-bs-target="#modalKandidat">
-                <i class="bi bi-image me-1"></i> Lihat Poster Kandidat
+              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-4 fw-bold mt-2 d-inline-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal"
+                data-bs-target="#modalKandidat" style="transition: all 0.3s ease;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                  <path
+                    d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+                </svg>
+                Lihat Poster Kandidat
               </button>
             @endif
           </div>
@@ -341,6 +347,41 @@
           </div>
           <div class="modal-footer border-0">
             <button type="button" class="btn btn-primary rounded-pill px-4 fw-bold" data-bs-dismiss="modal">Mengerti & Tutup</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Notifikasi Sudah Memilih -->
+    <div class="modal fade" id="modalSudahMemilih" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <!-- Menggunakan efek glassmorphism yang senada dengan tema -->
+        <div class="modal-content rounded-4 border-0 shadow-lg text-center" style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);">
+          <div class="modal-header border-0 pb-0 justify-content-end">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4 pt-0">
+            <!-- Icon/Ilustrasi -->
+            <div class="mb-4">
+              <div class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 80px; height: 80px; background: rgba(67, 94, 190, 0.1); color: #435ebe;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                    d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z" />
+                </svg>
+              </div>
+            </div>
+
+            <h4 class="fw-bolder text-dark mb-3">Hak Suara Telah Digunakan! 🎉</h4>
+            <p class="text-muted mb-0 px-2">
+              Terima kasih atas partisipasi Anda. Sistem kami mencatat bahwa Anda <strong>sudah melakukan pemilihan</strong>. Setiap pemilih hanya dapat menggunakan hak suaranya satu kali untuk
+              menjaga transparansi data.
+            </p>
+          </div>
+          <div class="modal-footer border-0 justify-content-center pb-4 mt-2">
+            <!-- Tombol senada dengan btn-login -->
+            <button type="button" class="btn btn-login btn-primary rounded-pill px-5 fw-bold text-white" data-bs-dismiss="modal">
+              Mengerti & Kembali
+            </button>
           </div>
         </div>
       </div>
@@ -390,6 +431,8 @@
         // Flash Data Error (SweetAlert)
         const gagal = $('.flash-data').data('gagal');
         const success = $('.flash-data').data('success');
+        // Cek apakah ada session 'voted' (sudah memilih)
+        const voted = $('.flash-data').data('voted');
         if (gagal) {
           Swal.fire({
             icon: 'error',
@@ -417,6 +460,14 @@
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           });
+        }
+        if (voted) {
+          // Menampilkan modal Bootstrap dengan opsi statis agar fokus dibaca
+          var modalVoted = new bootstrap.Modal(document.getElementById('modalSudahMemilih'), {
+            keyboard: false,
+            backdrop: 'static'
+          });
+          modalVoted.show();
         }
       });
     </script>

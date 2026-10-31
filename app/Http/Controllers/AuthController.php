@@ -54,7 +54,7 @@ class AuthController extends Controller
                     // Cek apakah pemilih sudah memilih
                     if ($pemilih->status == 1) {
                         Auth::guard('pemilih')->logout(); // Logout jika sudah memilih
-                        return redirect('/')->with(['error' => 'Anda sudah memilih']);
+                        return redirect('/')->with('voted', true);
                     }
 
                     return redirect('/voting');
