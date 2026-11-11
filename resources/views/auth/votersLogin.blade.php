@@ -61,7 +61,6 @@
         }
       }
 
-      /* Navbar & Main Content */
       .simple-navbar {
         padding: 1rem 0;
         position: fixed;
@@ -79,7 +78,6 @@
         padding-bottom: 60px;
       }
 
-      /* Login Card */
       .login-card {
         background: rgba(255, 255, 255, 0.85);
         backdrop-filter: blur(24px);
@@ -109,57 +107,73 @@
         position: relative;
       }
 
-      .login-right::before {
-        content: '';
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        background: rgba(67, 94, 190, 0.05);
-        border-radius: 50%;
-        top: -50px;
-        right: -50px;
-        z-index: 0;
-      }
-
       .login-right img {
         max-width: 100%;
         height: auto;
         filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.15));
         transition: transform 0.3s ease;
         z-index: 1;
-        position: relative;
       }
 
       .login-right:hover img {
         transform: scale(1.03) translateY(-5px);
       }
 
-      /* Buttons */
+      /* Style untuk Toggle Switch Login Mode */
+      .login-mode-toggle {
+        background-color: #f1f5f9;
+        border-radius: 50px;
+        padding: 0.35rem;
+        display: inline-flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .btn-toggle-mode {
+        border-radius: 50px !important;
+        padding: 0.5rem 1.5rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border: none;
+        color: #64748b;
+        background: transparent;
+        transition: all 0.3s ease;
+      }
+
+      .btn-toggle-mode.active {
+        background-color: #435ebe;
+        color: white;
+        box-shadow: 0 4px 10px rgba(67, 94, 190, 0.3);
+      }
+
+      /* Style Khusus Pembungkus Kamera */
+      #reader {
+        width: 100%;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 2px dashed #cbd5e1;
+        background: #f8fafc;
+      }
+
+      /* Menyembunyikan elemen link bawaan library di dalam canvas */
+      #reader a {
+        display: none !important;
+      }
+
       .btn-login {
         border-radius: 50px;
         padding: 0.9rem 2rem;
         font-weight: 700;
-        font-size: 1rem;
         background: linear-gradient(135deg, #435ebe 0%, #2a4094 100%);
         border: none;
         box-shadow: 0 10px 20px rgba(67, 94, 190, 0.3);
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition: all 0.3s ease;
       }
 
       .btn-login:hover {
         transform: translateY(-3px);
         box-shadow: 0 15px 30px rgba(67, 94, 190, 0.4);
-        background: linear-gradient(135deg, #5672d8 0%, #3451b3 100%);
       }
 
-      .btn-login:disabled {
-        background: #6c757d;
-        box-shadow: none;
-        transform: none;
-        cursor: not-allowed;
-      }
-
-      /* Clock Badge */
       .clock-badge {
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(10px);
@@ -167,26 +181,9 @@
         font-weight: 700;
         border-radius: 50px;
         border: 1px solid rgba(205, 220, 252, 0.5);
-        font-family: 'Courier New', monospace;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        display: inline-block;
-
-        /* Ukuran font responsif: min 12px, membesar dinamis, max 16px */
-        font-size: clamp(12px, 1.5vw, 16px);
-
-        /* Padding responsif: min 4px 12px, max 8px 18px */
         padding: clamp(4px, 1vw, 8px) clamp(12px, 2vw, 18px);
       }
 
-      /* Footer */
-      footer {
-        padding-bottom: 1rem;
-        text-align: center;
-        font-size: 0.9rem;
-        color: #6c757d;
-      }
-
-      /* Responsive */
       @media (max-width: 991px) {
         .login-right {
           display: none;
@@ -194,11 +191,6 @@
 
         .login-left {
           padding: 2rem 1.5rem;
-        }
-
-        body::before,
-        body::after {
-          opacity: 0.3;
         }
       }
     </style>
@@ -211,22 +203,12 @@
           @foreach ($config as $data)
             @if ($data->type == 2 && $data->name == 'app_logo')
               @php $path = Storage::url('apps/' . $data->value); @endphp
-              @if ($data->value == null)
-                <a href="/">
-                  <img src="{{ asset('assets/static/images/logo/icon2.svg') }}" alt="Logo" style="height: 64px">
-                </a>
-              @else
-                <a href="/">
-                  <img src="{{ $path }}" alt="Logo" style="height: 64px">
-                </a>
-              @endif
+              <a href="/"><img src="{{ $data->value == null ? asset('assets/static/images/logo/icon2.svg') : $path }}" alt="Logo" style="height: 64px"></a>
             @endif
           @endforeach
         </div>
         <div class="clock-wrapper">
-          <span class="clock-badge">
-            <i class="bi bi-clock me-1"></i> <span id="clock"></span>
-          </span>
+          <span class="clock-badge"><i class="bi bi-clock me-1"></i> <span id="clock"></span></span>
         </div>
       </div>
     </nav>
@@ -234,77 +216,75 @@
     <div class="main-content" id="app">
       <div class="login-card row g-0">
         <div class="col-lg-6 login-left">
-          <div class="mb-3 mb-lg-4 text-center">
+
+          <div class="text-center">
             <h2 class="fw-bolder text-dark mb-2">Selamat Datang! 👋</h2>
-            @foreach ($config as $data)
-              @if ($data->type == 0 && $data->value)
-                <p class="text-muted lead mb-0 fs-6">Silakan masuk untuk mulai berpartisipasi dalam <span class="text-primary fw-semibold">{{ $data->value }}</span></p>
-              @endif
-            @endforeach
+            <p class="text-muted small px-3 mb-4">Silakan masuk untuk mulai berpartisipasi dalam </br> <span class="text-primary fw-bold">{{ $config[0]->value }}</span> </p>
+
+            <!-- Toggle Switch Login Mode -->
+            <div class="login-mode-toggle shadow-sm">
+              <button type="button" class="btn btn-toggle-mode active" id="btnModeScan">
+                <i class="bi bi-qr-code-scan me-1"></i> Scan QR
+              </button>
+              <button type="button" class="btn btn-toggle-mode" id="btnModeManual">
+                <i class="bi bi-keyboard me-1"></i> Manual
+              </button>
+            </div>
           </div>
 
           <div class="flash-data" data-gagal="{{ Session::get('error') }}" data-success="{{ Session::get('success') }}" data-voted="{{ Session::get('voted') }}"></div>
 
-          <form method="POST" action="{{ route('login.voters') }}" id="loginForm">
-            @csrf
-            <div class="row gap-3">
-              <div class="col-12">
-                <div class="form-group has-icon-left">
-                  <label class="form-label fw-bold text-primary">Nomor Induk Siswa</label>
-                  <div class="position-relative">
-                    <input type="text" name="nis" class="form-control @error('nis') is-invalid @enderror" placeholder="Masukkan NIS Anda" value="{{ old('nis') }}">
-                    <div class="form-control-icon">
-                      <i class="bi bi-person-badge"></i>
-                    </div>
-                  </div>
-                  @error('nis')
-                    <div class="text-danger small mt-1 ps-3">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group has-icon-left">
-                  <label class="form-label fw-bold text-primary">Token Akses</label>
-                  <div class="position-relative">
-                    <input type="text" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Masukkan Token Unik"
-                      oninput="this.value = this.value.toUpperCase();" />
-                    <div class="form-control-icon">
-                      <i class="bi bi-shield-lock-fill"></i>
-                    </div>
-                  </div>
-                  @error('password')
-                    <div class="text-danger small mt-1 ps-3">{{ $message }}</div>
-                  @enderror
-                </div>
-              </div>
-
-              <div class="col-12 mt-3">
-                <button type="submit" id="btnSubmit" class="btn btn-login btn-primary w-100 text-white">
-                  <span id="btnText">Masuk Sekarang</i></span>
-                  <span id="btnLoading" class="d-none">
-                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Memproses...
-                  </span>
-                </button>
-              </div>
+          <!-- AREA 1: SCANNER QR -->
+          <div id="areaScanQR" class="text-center px-lg-3">
+            <div class="position-relative mx-auto shadow-sm" style="max-width: 300px;">
+              <!-- Container Kamera -->
+              <div id="reader"></div>
             </div>
-          </form>
+            <p class="mt-3 small text-primary fw-bold mb-0">Arahkan Kartu QR Code ke Kamera Laptop</p>
+            <p class="text-muted small mt-1" style="font-size: 0.8rem;">Sistem akan memproses login secara otomatis.</p>
+          </div>
 
+          <!-- AREA 2: FORM MANUAL (Disembunyikan secara default) -->
+          <div id="areaManual" class="d-none">
+            <form method="POST" action="{{ route('login.voters') }}" id="loginForm">
+              @csrf
+              <div class="row gap-3">
+                <div class="col-12">
+                  <div class="form-group has-icon-left">
+                    <label class="form-label fw-bold text-primary">Nomor Induk Siswa</label>
+                    <div class="position-relative">
+                      <input type="text" name="nis" id="inputNis" class="form-control @error('nis') is-invalid @enderror" placeholder="Masukkan NIS Anda" value="{{ old('nis') }}">
+                      <div class="form-control-icon"><i class="bi bi-person-badge"></i></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group has-icon-left">
+                    <label class="form-label fw-bold text-primary">Token Akses</label>
+                    <div class="position-relative">
+                      <input type="text" name="password" id="inputPassword" class="form-control @error('password') is-invalid @enderror" placeholder="Masukkan Token Unik"
+                        oninput="this.value = this.value.toUpperCase();" />
+                      <div class="form-control-icon"><i class="bi bi-shield-lock-fill"></i></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12 mt-2">
+                  <button type="submit" id="btnSubmit" class="btn btn-login btn-primary w-100 text-white">
+                    <span id="btnText">Masuk Sekarang</span>
+                    <span id="btnLoading" class="d-none"><span class="spinner-border spinner-border-sm me-2"></span> Memproses...</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Tombol Lihat Poster -->
           <div class="mt-4 text-center">
-            <p class="small text-muted px-3 mb-2">
-              <i class="bi bi-info-circle-fill me-1 text-danger"></i>
-              Gunakan NIS dan Token yang telah diberikan oleh panitia pemilihan.
-            </p>
-            <!-- Penambahan Tombol Manual untuk Poster -->
             @if (isset($kandidat) && $kandidat->count() > 0)
-              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-4 fw-bold mt-2 d-inline-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal"
-                data-bs-target="#modalKandidat" style="transition: all 0.3s ease;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                  <path
-                    d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
-                </svg>
-                Lihat Poster Kandidat
+              <button type="button" class="btn btn-sm btn-outline-primary rounded-pill px-4 fw-bold mt-2" data-bs-toggle="modal" data-bs-target="#modalKandidat">
+                <i class="bi bi-image me-1"></i> Lihat Poster Kandidat
               </button>
             @endif
           </div>
@@ -388,7 +368,7 @@
     </div>
 
     <footer>
-      <div class="container">
+      <div class="container text-center py-3">
         <p class="mb-0">{{ Date('Y') }} &copy; Online Voting. Crafted with <i class="bi bi-heart-fill text-danger mx-1"></i> by PPA</p>
       </div>
     </footer>
@@ -398,6 +378,126 @@
     <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.all.min.js') }}"></script>
 
     {{-- Script Custom --}}
+    <!-- LIBRARY HTML5 QR CODE -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <script>
+      let html5QrCode;
+
+      $(document).ready(function() {
+        // --- LOGIKA SCANNER QR ---
+        function startScanner() {
+          // Inisialisasi library secara manual agar tampilannya bersih
+          html5QrCode = new Html5Qrcode("reader");
+
+          const config = {
+            fps: 10,
+            qrbox: {
+              width: 200,
+              height: 200
+            }
+          };
+
+          // Memulai scanner (facingMode: user untuk kamera depan/laptop)
+          html5QrCode.start({
+              facingMode: "user"
+            }, config, onScanSuccess)
+            .catch((err) => {
+              console.error("Camera Error:", err);
+              Swal.fire({
+                icon: 'warning',
+                title: 'Kamera Tidak Ditemukan',
+                text: 'Pastikan Anda telah memberikan izin akses kamera pada browser. Mengalihkan ke mode manual...',
+                confirmButtonColor: '#435ebe'
+              }).then(() => {
+                switchToManual();
+              });
+            });
+        }
+
+        function stopScanner() {
+          if (html5QrCode && html5QrCode.isScanning) {
+            html5QrCode.stop().catch(err => console.error("Gagal menghentikan scanner", err));
+          }
+        }
+
+        function onScanSuccess(decodedText) {
+          stopScanner(); // Matikan kamera sesaat setelah terbaca
+
+          // Asumsi format QR adalah "NIS:TOKEN" (contoh: "123456:ABCD12")
+          const dataQR = decodedText.split(':');
+
+          if (dataQR.length === 2) {
+            Swal.fire({
+              title: 'QR Code Terbaca!',
+              html: 'Memproses login otomatis...',
+              allowOutsideClick: false,
+              didOpen: () => {
+                Swal.showLoading();
+              }
+            });
+
+            // Isi form manual yang disembunyikan
+            $('#inputNis').val(dataQR[0]);
+            $('#inputPassword').val(dataQR[1]);
+
+            // Submit form
+            $('#loginForm').submit();
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Format QR Tidak Valid',
+              text: 'QR Code yang dipindai tidak dikenali oleh sistem.',
+              confirmButtonText: 'Coba Lagi',
+              confirmButtonColor: '#435ebe'
+            }).then(() => {
+              startScanner(); // Hidupkan kamera lagi jika gagal
+            });
+          }
+        }
+
+        // --- LOGIKA TOGGLE UI ---
+        function switchToManual() {
+          stopScanner();
+          $('#btnModeScan').removeClass('active');
+          $('#btnModeManual').addClass('active');
+          $('#areaScanQR').addClass('d-none');
+          $('#areaManual').removeClass('d-none');
+        }
+
+        function switchToScan() {
+          $('#btnModeManual').removeClass('active');
+          $('#btnModeScan').addClass('active');
+          $('#areaManual').addClass('d-none');
+          $('#areaScanQR').removeClass('d-none');
+          startScanner();
+        }
+
+        $('#btnModeManual').click(switchToManual);
+        $('#btnModeScan').click(switchToScan);
+
+        // Mulai kamera otomatis saat halaman dimuat
+        startScanner();
+
+
+        // (Logika bawaan jam dan flash message SweetAlert tetap jalan)
+        $('#loginForm').on('submit', function() {
+          $('#btnSubmit').prop('disabled', true);
+          $('#btnText').addClass('d-none');
+          $('#btnLoading').removeClass('d-none');
+        });
+
+        const gagal = $('.flash-data').data('gagal');
+        if (gagal) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Akses Ditolak',
+            html: gagal,
+            confirmButtonColor: '#435ebe'
+          });
+        }
+      });
+    </script>
     <script>
       // Jam Realtime
       function updateClock() {
